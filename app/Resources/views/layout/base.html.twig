@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %} My Journey { page_name } {% endblock %}</title>
+
+    <!-- Bootstrap twitter -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <link rel=”stylesheet” href=”https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css”>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.4/datepicker.min.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+</head>
+<body>
+{% include('layout/nav.html.twig') %}
+
+<div class="message">
+    {{ include('layout/success.html.twig') }}
+    {{ include('layout/error.html.twig') }}
+    {{ include('layout/info.html.twig') }}
+</div>
+
+{% block body %}{% endblock %}
+
+{% include('layout/footer.html.twig') %}
+<!-- float button return top page -->
+<a href="#" class="sf-back-to-top"><span class="arrow"></span>Top</a>
+
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Bootstrap twitter -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.4/datepicker.min.js"></script>
+<script src="{{ asset('js/function.js') }}"></script>
+</body>
+</html>
