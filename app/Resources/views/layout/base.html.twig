@@ -3,15 +3,34 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+
     <title>{% block title %} My Journey { page_name } {% endblock %}</title>
 
-    <!-- Bootstrap twitter -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
-    <link rel=”stylesheet” href=”https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css”>
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('front/css/bootstrap.css') }}" rel="stylesheet">
+    <!-- Font awesome cdn -->
+    <script src="https://use.fontawesome.com/c8348beb8c.js"></script>
+    <!-- Datepicker -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.4/datepicker.min.css">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+    <!-- plugin IziToast (notify) -->
+    <link rel="stylesheet" href="{{ asset('plugin/iziToast/dist/css/iziToast.min.css') }}">
+    <script src="{{ asset('plugin/iziToast/dist/js/iziToast.min.js') }}"></script>
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('front/css/main.css') }}" rel="stylesheet">
+    <!-- Fonts from Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
 </head>
+
 <body>
 {% include('layout/nav.html.twig') %}
 
@@ -19,7 +38,10 @@
     {{ include('layout/success.html.twig') }}
     {{ include('layout/error.html.twig') }}
     {{ include('layout/info.html.twig') }}
+    {{ include('layout/warning.html.twig') }}
 </div>
+
+{% include('layout/header.html.twig') %}
 
 {% block body %}{% endblock %}
 
@@ -27,12 +49,17 @@
 <!-- float button return top page -->
 <a href="#" class="sf-back-to-top"><span class="arrow"></span>Top</a>
 
-
-<!-- jQuery -->
+<!--##################################################################
+ #####################################################################
+ #####################################################################-->
+<!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- Bootstrap twitter -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+<!-- Datepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.4/datepicker.min.js"></script>
-<script src="{{ asset('js/function.js') }}"></script>
+<!-- Bootstrap 3 -->
+<script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
+<!-- Custom js -->
+<script src="{{ asset('front/js/function.js') }}"></script>
+
 </body>
 </html>

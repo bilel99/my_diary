@@ -1,6 +1,7 @@
 /**
  * Created by bilel on 14/12/2017.
  */
+
 $(document).ready(function() {
     // configure the bootstrap datepicker
     $('.js-datepicker').datepicker({

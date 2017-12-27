@@ -1,6 +1,6 @@
-{% for flashMessage in app.session.flashbag.get('info') %}
+{% for flashMessage in app.session.flashbag.get('warning') %}
     <script>
-        iziToast.info({
+        iziToast.warning({
             position: 'bottomRight', // center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
             progressBarColor: '',
             backgroundColor: '',
@@ -13,7 +13,7 @@
             drag: true,
             progressBar: true,
             timeout: 5000,
-            title: 'He Ho',
+            title: 'Hoola',
             message: '{{ flashMessage }}',
         });
     </script>

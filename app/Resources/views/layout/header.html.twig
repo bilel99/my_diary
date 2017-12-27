@@ -1,0 +1,15 @@
+{% if app.request.attributes.get('_route') != 'login' and app.request.attributes.get('_route') != 'register' and app.request.attributes.get('_route') != 'forgot' and app.request.attributes.get('_route') != 'forgotStepFinal' %}
+    <div id="headerwrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1>Ajouter un post<br/>
+                        avec toutes simplicité.</h1>
+                </div><!-- /col-lg-6 -->
+                <div class="col-lg-6">
+                    <img class="img-responsive" src="{{ asset('front/img/ipad-hand.png') }}" alt="header background">
+                </div><!-- /col-lg-6 -->
+            </div><!-- /row -->
+        </div><!-- /container -->
+    </div><!-- /headerwrap -->
+{% endif %}

@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Media;
+use AppBundle\Entity\Role;
 use AppBundle\Entity\Users;
 use AppBundle\Form\ForgotStepFinalType;
 use AppBundle\Form\ForgotType;
@@ -25,25 +27,21 @@ class AuthController extends Controller
 
         $users = new Users();
         $form = $this->createForm(LoginType::class, $users);
-        $form->add('Log\'in', SubmitType::class);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            // Récupération d'un champ sous laravel => $request->email
-            // Récupération d'un champ sous Symfony avec (formType) => $form['email']->getData();
-            // Récupération d'un champ sous Symfony avec formulaire HTML => $request->request->get('name');
             $email = $form['email']->getData();
             $password = $form['password']->getData();
 
             $repository = $this->getDoctrine()->getRepository(Users::class);
-            $result = $repository->authorizedAccess($email, $password);
+            $result = $repository->authorizedAccess($email, sha1($password.' '.$this->getParameter('salt')));
             if(count($result) === 1) {
                 $this->get('session')->set('users', $result[0]);
                 $users = $this->get('session')->get('users');
-                $this->addFlash("info", "bienvenue ".$users->prenom);
+                $this->addFlash("info", "bienvenue ".$users->getEmail());
                 return $this->redirectToRoute('homepage.index');
             } else {
-                $this->addFlash('error', 'Utilisateur ou mot de passe incorrect!');
+                $this->addFlash('error', 'Email ou mot de passe incorrect!');
                 $this->redirectToRoute('login');
             }
         }
@@ -63,31 +61,53 @@ class AuthController extends Controller
         // Création formulaire
         $users = new Users();
         $form = $this->createForm(RegisterType::class, $users);
-        $form->add('Create', SubmitType::class);
+
         $form->handleRequest($request);
+
+        $instanceRole = $this->getDoctrine()->getRepository(Role::class);
+        $role = $instanceRole->find(1);
+
+        $instanceMedia = $this->getDoctrine()->getRepository(Media::class);
+        $media = $instanceMedia->find(1);
+
         if($form->isSubmitted() && $form->isValid()){
             $em = $this->getDoctrine()->getManager();
             $users->setCreatedAt(new \DateTime());
-            $users->setFilename("default.jpg");
+            $users->setRole($role);
+            $users->setMedia($media);
+            // Cryptage du password + grain de sel
+            $users->setPassword(sha1($form['password']->getData().' '.$this->getParameter('salt')));
+
             $em->persist($users);
             $em->flush();
 
+            /**
+             * Connection suite à l'inscription
+             */
+            $entityUsers = $this->getDoctrine()->getRepository(Users::class);
+            $result = $entityUsers->find($users->getId());
+            $this->get('session')->set('users', $result);
+
             // Envoie email
-            $name = 'toto';
-            $message = (new \Swift_Message('Hello world'))
+            $name = 'bilel.bekkouche@gmail.com';
+            $email = $form['email']->getData();
+            $message = (new \Swift_Message('Register'))
                 ->setFrom('bilel.bekkouche@gmail.com')
                 ->setTo('bilel.bekkouche@hotmail.fr')
                 ->setBody(
                     $this->renderView(
-                        'Emails/contact.html.twig',
-                        array('name' => $name)
+                        'email/register.html.twig',
+                        array(
+                            'name' => $name,
+                            'email' => $email
+                        )
                     ),
                     'text/html'
                 );
             $mailer->send($message);
 
             $this->addFlash('success', 'Compte créer avec succès!');
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('homepage.index');
         }
 
         return $this->render('Auth/register.html.twig', [
@@ -103,7 +123,6 @@ class AuthController extends Controller
     public function forgotPass(Request $request, \Swift_Mailer $mailer){
         $users = new Users();
         $form = $this->createForm(ForgotType::class, $users);
-        $form->add('send', SubmitType::class);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -129,12 +148,12 @@ class AuthController extends Controller
                 $em->flush();
 
                 // Envoie email
-                $message = (new \Swift_Message('Forgot password'))
+                $message = (new \Swift_Message('Mot de passe oublié'))
                     ->setFrom('bilel.bekkouche@gmail.com')
                     ->setTo('bilel.bekkouche@hotmail.fr')
                     ->setBody(
                         $this->renderView(
-                            'Emails/forgot.html.twig',
+                            'email/forgot.html.twig',
                             array('randomPassword' => $newPass)
                         ),
                         'text/html'
@@ -158,7 +177,6 @@ class AuthController extends Controller
     public function forgotStepFinal(Request $request){
         $users = new Users();
         $form = $this->createForm(ForgotStepFinalType::class, $users);
-        $form->add('validate', SubmitType::class);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){

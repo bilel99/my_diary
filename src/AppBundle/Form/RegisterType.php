@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -16,9 +17,8 @@ class RegisterType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('pseudo')
             ->add('email', EmailType::class)
-            ->add('nom')
-            ->add('prenom')
             ->add('date_naissance', DateType::class, [
                 'label'  =>'date_naissance',
                 'widget' => 'single_text',
