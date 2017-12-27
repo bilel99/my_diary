@@ -8,6 +8,7 @@ use AppBundle\Entity\Users;
 use AppBundle\Form\ForgotStepFinalType;
 use AppBundle\Form\ForgotType;
 use AppBundle\Form\LoginType;
+use AppBundle\Form\ProfilType;
 use AppBundle\Form\RegisterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -56,7 +57,7 @@ class AuthController extends Controller
      * @Method({"GET", "POST"})
      * @return string
      */
-    public function register(Request $request, \Swift_Mailer $mailer) {
+    public function registerAction(Request $request, \Swift_Mailer $mailer) {
 
         // Création formulaire
         $users = new Users();
@@ -122,7 +123,7 @@ class AuthController extends Controller
      * @Route("/forgot", name="forgot")
      * @Method({"GET", "POST"})
      */
-    public function forgotPass(Request $request, \Swift_Mailer $mailer){
+    public function forgotPassAction(Request $request, \Swift_Mailer $mailer){
         $users = new Users();
         $form = $this->createForm(ForgotType::class, $users);
         $form->handleRequest($request);
@@ -176,7 +177,7 @@ class AuthController extends Controller
      * @Route("/forgotStepFinal", name="forgotStepFinal")
      * @Method({"GET", "POST"})
      */
-    public function forgotStepFinal(Request $request){
+    public function forgotStepFinalAction(Request $request){
         $users = new Users();
         $form = $this->createForm(ForgotStepFinalType::class, $users);
         $form->handleRequest($request);
@@ -216,7 +217,7 @@ class AuthController extends Controller
      * @Method({"GET"})
      * @return string
      */
-    public function logout() {
+    public function logoutAction() {
         // Session remove users unset($_SESSION['users']); => $this->get('session')->remove('users');
         // $session_destroy() => $this->get('session')->clear();
         $this->get('session')->remove('users');

@@ -1,1 +1,51 @@
-hello: Bonjour
+######## Navigation bar #########
+navigation_accueil: Accueil
+navigation_addPost: Créer un poste
+navigation_myPost: Mes postes
+navigation_login: Connection
+navigation_register: Inscription
+
+######## HomePage Section 1 #########
+section1_title1: Ajouter un post
+section1_title2: avec toutes simplicité.
+
+######## HomePage Section 2 #########
+section2_title: Comment sa marche ?
+section2_title2: Ses super facile, il suffit de poster, puis le poste est immédiatement visible, et sur tous les navigateurs et plateforme mobile (Android, IOS, mais aussi Windows Phone) et autre distribution linux !
+section2_objet1: 1 - Navigateur Compatible
+section2_objet2: 2 - Notification Email
+section2_objet3: 3 - Facilité de prise de note
+
+######## HomePage Section 3 #########
+section3_title: Quelque post
+section3_title2: de dernière minute
+section3_title3: Garder les yeux ouvert !
+section3_button_read: Lire
+
+######## HomePage Section 4 #########
+section4_title: Quelque actu
+section4_title2: de dernière minute
+section4_title3: A vos lunette !
+section4_button_read: Lire
+
+######## HomePage Footer #########
+footer_create: Created by Bilel Bekkouche - 2017 -
+
+######## Login #########
+login_title: Entrer votre email et votre mot de passe pour pouvoir accèder à votre compte!
+login_panel: Connection
+login_puce1: Mot de passe oublié
+login_puce2: Pas encore inscris
+
+######## Register #########
+register_title: Merci de remplir les champs suivant pour vous inscrire au site!
+register_panel: Inscription
+register_puce1: Connection
+
+######## Forgot #########
+forgot_title: Entrer votre email, vous recevrez par mail un mot de passe provisoir.
+forgot_panel: Mot de passe oublié
+forgot_puce1: Connection
+forgot_puce2: Pas encore inscris
+
+######## Forgot step 2 #########

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsersRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Users
 {
@@ -27,13 +28,6 @@ class Users
      * @ORM\JoinColumn(name="ville_id", referencedColumnName="id", nullable=true)
      */
     private $ville;
-
-    /**
-     * @var Media
-     * @ORM\OneToOne(targetEntity="Media", inversedBy="users")
-     * @ORM\JoinColumn(name="media_id", referencedColumnName="id", nullable=true)
-     */
-    private $media;
 
     /**
      * @var Role
@@ -75,12 +69,23 @@ class Users
      */
     private $password;
 
+    public $oldPassword;
+
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_naissance", type="date", nullable=true)
      */
     private $dateNaissance;
+
+    /**
+     * @var filename
+     *
+     * @ORM\Column(name="filename", type="string", length=255, nullable=true)
+     */
+    private $filename;
+
+    public $file;
 
     /**
      * @var string
@@ -265,6 +270,76 @@ class Users
     {
         $this->updatedAt = $updatedAt;
     }
+
+    /*****************************************************
+     *
+     *                  Step Upload Image
+     *
+     ****************************************************/
+    /**
+     * @ORM\PostLoad()
+     */
+    public function postLoad(){
+        $this->updatedAt = new \DateTime();
+    }
+
+    public function getUploadRootDir(){
+        return __DIR__.'/../../../web/uploads';
+    }
+
+    public function getAbsolutePath(){
+        return $this->filename === null ? null : $this->getUploadRootDir().'/'.$this->filename;
+    }
+
+    public function getAssetPath(){
+        return 'uploads/'.$this->filename;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload(){
+        $this->tempFile = $this->getAbsolutePath();
+        $this->oldFile = $this->getFilename();
+        $this->updatedAt = new \DateTime();
+
+        if($this->file != null) {
+            $this->filename = md5(uniqid()).'.'.$this->file->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload(){
+        if($this->file !== null) {
+            $this->file->move($this->getUploadRootDir(), $this->filename);
+            unset($this->file);
+
+            if($this->oldFile != null) {
+                unlink($this->tempFile);
+            }
+        }
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preRemoveUpload(){
+        $this->tempFile = $this->getAbsolutePath();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload(){
+        if(file_exists($this->tempFile)){
+            unlink($this->tempFile);
+        }
+    }
+
     /**
      * Constructor
      */
@@ -296,30 +371,6 @@ class Users
     public function getVille()
     {
         return $this->ville;
-    }
-
-    /**
-     * Set media
-     *
-     * @param \AppBundle\Entity\Media $media
-     *
-     * @return Users
-     */
-    public function setMedia(\AppBundle\Entity\Media $media = null)
-    {
-        $this->media = $media;
-
-        return $this;
-    }
-
-    /**
-     * Get media
-     *
-     * @return \AppBundle\Entity\Media
-     */
-    public function getMedia()
-    {
-        return $this->media;
     }
 
     /**
@@ -412,5 +463,37 @@ class Users
     public function getDiary()
     {
         return $this->diary;
+    }
+
+    /**
+     * @return filename
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param filename $filename
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOldPassword()
+    {
+        return $this->oldPassword;
+    }
+
+    /**
+     * @param mixed $oldPassword
+     */
+    public function setOldPassword($oldPassword)
+    {
+        $this->oldPassword = $oldPassword;
     }
 }
