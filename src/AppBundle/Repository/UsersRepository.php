@@ -24,4 +24,13 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->execute();
     }
+
+    public function isMyPassword($id) {
+        return $this->createQueryBuilder('u')
+            ->addSelect('u.password')
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->execute();
+    }
 }

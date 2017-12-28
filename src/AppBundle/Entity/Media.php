@@ -30,12 +30,6 @@ class Media
 
     /**
      * @var array
-     * @ORM\OneToOne(targetEntity="Users", mappedBy="media")
-     */
-    private $users;
-
-    /**
-     * @var array
      * @ORM\ManyToMany(targetEntity="Diary", mappedBy="media")
      */
     private $diary;
@@ -280,30 +274,6 @@ class Media
     public function getActu()
     {
         return $this->actu;
-    }
-
-    /**
-     * Set users
-     *
-     * @param \AppBundle\Entity\Users $users
-     *
-     * @return Media
-     */
-    public function setUsers(\AppBundle\Entity\Users $users = null)
-    {
-        $this->users = $users;
-
-        return $this;
-    }
-
-    /**
-     * Get users
-     *
-     * @return \AppBundle\Entity\Users
-     */
-    public function getUsers()
-    {
-        return $this->users;
     }
 
     /**
