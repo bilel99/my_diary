@@ -29,6 +29,8 @@ class Users
      */
     private $ville;
 
+    public $cp;
+
     /**
      * @var Role
      * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
@@ -495,5 +497,21 @@ class Users
     public function setOldPassword($oldPassword)
     {
         $this->oldPassword = $oldPassword;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCp()
+    {
+        return $this->cp;
+    }
+
+    /**
+     * @param mixed $cp
+     */
+    public function setCp($cp)
+    {
+        $this->cp = $cp;
     }
 }

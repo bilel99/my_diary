@@ -25,6 +25,11 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
             ->execute();
     }
 
+    /**
+     * Return getPassword is users id
+     * @param $id
+     * @return mixed
+     */
     public function isMyPassword($id) {
         return $this->createQueryBuilder('u')
             ->addSelect('u.password')
@@ -33,4 +38,17 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * Return the users table and the data table assiciate
+     */
+    public function findAllWithAssociateTable(){
+        return $this->createQueryBuilder("u")
+            ->leftJoin("u.ville", "v")
+            ->addSelect("v")
+            ->orderBy("u.createdAt", "DESC")
+            ->getQuery()
+            ->getResult();
+    }
+
 }

@@ -131,6 +131,7 @@ class AuthController extends Controller
         if($form->isSubmitted() && $form->isValid()){
             // Générer password
             $newPass = $this->rand_passwd();
+            $email = $form['email']->getData();
 
             // Vérification si email existe
             $users = $this->getDoctrine()->getRepository(Users::class);
@@ -139,7 +140,7 @@ class AuthController extends Controller
             if(count($validEmail) === 1) {
                 // Sauvegarde new pass champ forgot table
                 $em = $this->getDoctrine()->getManager();
-                $upd = $em->getRepository(Users::class)->find($validEmail[0]->id);
+                $upd = $em->getRepository(Users::class)->find($validEmail[0]->getId());
 
                 if(!$upd){
                     throw $this->createNotFoundException(
@@ -157,7 +158,10 @@ class AuthController extends Controller
                     ->setBody(
                         $this->renderView(
                             'email/forgot.html.twig',
-                            array('randomPassword' => $newPass)
+                            array(
+                                'randomPassword' => $newPass,
+                                'email' => $email
+                            )
                         ),
                         'text/html'
                     );

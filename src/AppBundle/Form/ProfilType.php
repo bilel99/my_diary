@@ -6,12 +6,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProfilType extends AbstractType {
+
+
     /**
      * {@inheritdoc}
      */
@@ -29,6 +30,10 @@ class ProfilType extends AbstractType {
                 'attr' => ['class' => 'js-datepicker'],
                 'placeholder' => 'Select a value'
             ])
+            ->add('cp', TextType::class, array(
+                'required' => false,
+                'attr' => array('class' => 'cp', 'maxlength' => 5)
+            ))
             ->add('file', FileType::class, array(
                 'label' => 'Quel image vous représente ?',
                 'required' => false,

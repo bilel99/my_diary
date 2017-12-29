@@ -7,16 +7,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            {% if app.session.has('users') %}
-                <a class="navbar-brand" href="{{ path('homepage.index') }}"><b>Bilel Bekkouche</b></a>
-            {% else %}
-                <a class="navbar-brand" href="{{ path('login') }}"><b>Bilel Bekkouche</b></a>
-            {% endif %}
+            <a class="navbar-brand"><b>{{ 'navigation_bilel'|trans }}</b></a>
 
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="{{ path('homepage.index') }}">Accueil</a></li>
-                <li><a href="#">Créer un poste</a></li>
-                <li><a href="#">Mes postes</a></li>
+                <li><a href="{{ path('homepage.index') }}">{{ 'navigation_accueil'|trans }}</a></li>
+                <li><a href="#">{{ 'navigation_addPost'|trans }}</a></li>
+                <li><a href="#">{{ 'navigation_myPost'|trans }}</a></li>
             </ul>
         </div>
         <div class="navbar-collapse collapse">
@@ -24,16 +20,16 @@
                 {% if app.session.has('users') %}
                     <!-- dropdown -->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">bienvenue {{ app.session.get('users').email }} <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ 'navigation_welcome'|trans }} {{ app.session.get('users').email }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ path('profil', {'id':app.session.get('users').id}) }}">Mon profil</a></li>
+                            <li><a href="{{ path('profil', {'id':app.session.get('users').id}) }}">{{ 'navigation_profil'|trans }}</a></li>
                             <li class="divider"></li>
-                            <li><a href="{{ path('logout') }}">Déconnection</a></li>
+                            <li><a href="{{ path('logout') }}">{{ 'navigation_logout'|trans }}</a></li>
                         </ul>
                     </li>
                 {% else %}
-                    <li><a href="{{ path('login') }}">Connection</a></li>
-                    <li><a href="{{ path('register') }}">Inscription</a></li>
+                    <li><a href="{{ path('login') }}">{{ 'navigation_login'|trans }}</a></li>
+                    <li><a href="{{ path('register') }}">{{ 'navigation_register'|trans }}</a></li>
                 {% endif %}
             </ul>
         </div><!--/.nav-collapse -->

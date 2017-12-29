@@ -10,4 +10,18 @@ namespace AppBundle\Repository;
  */
 class VilleRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * Return row ville in id
+     * @param $ville
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getVille($ville){
+        return $this->createQueryBuilder("v")
+            ->addSelect("v")
+            ->andWhere("v.libelle = :ville")
+            ->setParameter("ville", $ville)
+            ->getQuery()
+            ->execute();
+    }
 }

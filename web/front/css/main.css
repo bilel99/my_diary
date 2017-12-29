@@ -12,6 +12,15 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+/** Loading Ville field text **/
+.loading {
+    position: absolute;
+    float: right;
+    margin-top: -50px;
+    margin-left: 275px;
+    font-size: 2.5em;
+}
+
 /* Sign'in and Register and Forgot */
 .space {
     margin-top: 70px;
@@ -166,4 +175,3 @@ i {
 .user-body .tab-content > div {float: left; width: 100%;}
 .user-body .tab-content h4 {width: 100%; margin: 10px 0; color: #333;}
 .user-body ul { list-style:none; margin-left:0; padding-left:0; }
-

@@ -402,4 +402,5 @@ class Ville
     {
         return $this->users;
     }
+
 }
