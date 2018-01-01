@@ -237,4 +237,9 @@ class Langue
     {
         return $this->diary;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

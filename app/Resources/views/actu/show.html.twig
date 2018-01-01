@@ -1,0 +1,91 @@
+{% extends 'layout/base.html.twig' %}
+{% block body %}
+
+    <div class="container" style="margin-top: 90px">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="panel panel-default ticket-list">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">{{ 'actu_panel_detail'|trans }}</h3>
+                    </div>
+                    <div class="panel-body ">
+                        <div class="col-md-6 show-actu">
+                            <ul>
+                                <li>{{ 'actu_show_field10'|trans }}<hr></li>
+                                <li>{{ 'actu_show_field1'|trans }}<hr></li>
+                                <li>{{ 'actu_show_field2'|trans }}<hr></li>
+                                <li>{{ 'actu_show_field3'|trans }}<hr></li>
+                                <li>{{ 'actu_show_field4'|trans }}<hr></li>
+                                <li>{{ 'actu_show_field5'|trans }}<hr></li>
+                                <li>{{ 'actu_show_field8'|trans }}<hr></li>
+                                <li>{{ 'actu_show_field9'|trans }}</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 show-actu">
+                            <ul>
+                                <li>{{ actu.getId() }}<hr></li>
+                                <li>{{ actu.getLangue().getName() }}<hr></li>
+                                <li>{{ actu.getUsers().getPseudo() }}<hr></li>
+                                <li>{{ actu.getTitre() }}<hr></li>
+                                <li>{{ actu.getContenu() }}<hr></li>
+                                <li>{{ actu.getStatus() }}<hr></li>
+                                <li>{{ actu.getCreatedAt()|date('d/m/Y') }}<hr></li>
+                                <li>{{ actu.getUpdatedAt()|date('d/m/Y') }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default ticket-list">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">{{ 'actu_panel_date'|trans }}</h3>
+                    </div>
+                    <div class="panel-body ">
+                        <div class="col-md-6 show-actu">
+                            <ul>
+                                <li>{{ 'actu_show_field6'|trans }}<hr></li>
+                                <li>{{ 'actu_show_field7'|trans }}</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 show-actu">
+                            <ul>
+                                <li>{{ actu.getDateDebut()|date('d/m/Y') }}<hr></li>
+                                <li>{{ actu.getDateFin()|date('d/m/Y') }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default ticket-list">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">{{ 'actu_panel_action'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <!-- url actu ajax -->
+                        <input type="hidden" class="url_actu_show" value="{{ absolute_url(path('setterStatus', { 'id': actu.id })) }}">
+
+                        <div class="btn-action-actu">
+                            <a href=""><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                            <a href=""><i class="fa fa-trash-o fa-2x"></i></a>
+                        </div>
+                        <div class="action-actu-widget-on-off">
+                            <span>{{ 'actu_action_field_status'|trans }}: &nbsp;</span>
+                            {% if actu.status == 'actif' %}
+                                <input type="checkbox" class="changeActuStatus" checked data-toggle="toggle" data-onstyle="primary">
+                            {% else %}
+                                <input type="checkbox" class="changeActuStatus" data-toggle="toggle" data-onstyle="primary">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

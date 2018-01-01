@@ -514,4 +514,9 @@ class Users
     {
         $this->cp = $cp;
     }
+
+    public function __toString()
+    {
+        return $this->pseudo;
+    }
 }

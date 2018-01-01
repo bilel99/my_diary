@@ -22,7 +22,8 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ 'navigation_welcome'|trans }} {{ app.session.get('users').email }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ path('profil', {'id':app.session.get('users').id}) }}">{{ 'navigation_profil'|trans }}</a></li>
+                            <li><a href="{{ path('profil', {'id': app.session.get('users').getId()}) }}">{{ 'navigation_profil'|trans }}</a></li>
+                            <li><a href="{{ path('actu') }}">{{ 'navigation_actu'|trans }}</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ path('logout') }}">{{ 'navigation_logout'|trans }}</a></li>
                         </ul>

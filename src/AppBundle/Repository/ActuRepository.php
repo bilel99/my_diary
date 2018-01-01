@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class ActuRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getListInActu($user){
+        return $this->createQueryBuilder("a")
+            ->leftJoin("a.langue", "l")
+            ->leftJoin("a.users", "u")
+            ->addSelect("a", "l", "u")
+            ->andWhere("a.users = :users")
+            ->setParameter("users", $user)
+            ->orderBy("a.createdAt", "DESC")
+            ->getQuery()
+            ->getResult();
+    }
 }

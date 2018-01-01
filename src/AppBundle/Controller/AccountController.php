@@ -6,6 +6,7 @@ use AppBundle\Entity\Users;
 use AppBundle\Entity\Ville;
 use AppBundle\Form\ChangePasswordType;
 use AppBundle\Form\ProfilType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,7 @@ class AccountController extends Controller {
     /**
      * @Route("/profil/{id}", name="profil")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
      */
     public function profilAction(Request $request, Users $users){
         // Récupération de la tables ville
@@ -71,6 +73,7 @@ class AccountController extends Controller {
     /**
      * @Route("/villes/{cp}", name="villes")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
      */
     public function villesAction(Request $request, $cp){
         if($request->isXmlHttpRequest()){
@@ -95,6 +98,7 @@ class AccountController extends Controller {
     /**
      * @Route("/changePassword/{id}", name="changePassword")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
      */
     public function changePasswordAction(Request $request, Users $users) {
         $form = $this->createForm(ChangePasswordType::class, $users);
@@ -126,6 +130,7 @@ class AccountController extends Controller {
     /**
      * @Route("/deleteUser/{id}", name="deleteUser")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
      */
     public function deleteUserAction(Request $request, Users $users) {
         // Delete

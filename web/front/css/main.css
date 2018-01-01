@@ -175,3 +175,37 @@ i {
 .user-body .tab-content > div {float: left; width: 100%;}
 .user-body .tab-content h4 {width: 100%; margin: 10px 0; color: #333;}
 .user-body ul { list-style:none; margin-left:0; padding-left:0; }
+
+
+/* Table Actu */
+.ticket-list {
+    width: 500px;
+}
+.ticket-list .panel-heading {
+    background-color:#F4F8F9;
+    border-bottom: none;
+}
+.ticket-list .panel-body {
+    background-color:#F4F8F9;
+}
+.ticket-list .table-head{
+    border: none;
+}
+.fa-pencil-square-o {
+    color: #629755;
+}
+.fa-trash-o {
+    color: #B0413E;
+}
+.fa-newspaper-o {
+    color: #3276b1;
+}
+.show-actu ul {
+    list-style:none; margin-left:0; padding-left:0;
+}
+.btn-action-actu {
+    float: left;
+}
+.action-actu-widget-on-off{
+    float: right;
+}

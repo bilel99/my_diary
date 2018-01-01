@@ -16,7 +16,8 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
      */
     public function authorizedAccess($email, $password) {
         return $this->createQueryBuilder("u")
-            ->addSelect("u")
+            ->leftJoin("u.role", "r")
+            ->addSelect("u", "r")
             ->andWhere("u.email = :email")
             ->andWhere("u.password = :password")
             ->setParameter("email", $email)

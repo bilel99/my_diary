@@ -37,6 +37,16 @@ class AuthController extends Controller
             $repository = $this->getDoctrine()->getRepository(Users::class);
             $result = $repository->authorizedAccess($email, sha1($password.' '.$this->getParameter('salt')));
             if(count($result) === 1) {
+                // Changement role via Symfony, générer un nouveau token
+                $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken(
+                    $result[0],
+                    null,
+                    'main',
+                    array($result[0]->getRole()->getRole())
+                );
+                $this->container->get('security.token_storage')->setToken($token);
+                // Fin changement role via symfony
+
                 $this->get('session')->set('users', $result[0]);
                 $users = $this->get('session')->get('users');
                 $this->addFlash("info", "bienvenue ".$users->getEmail());
@@ -224,6 +234,10 @@ class AuthController extends Controller
     public function logoutAction() {
         // Session remove users unset($_SESSION['users']); => $this->get('session')->remove('users');
         // $session_destroy() => $this->get('session')->clear();
+
+        // Remove Token role via symfony
+        $this->container->get('security.token_storage')->setToken(null);
+
         $this->get('session')->remove('users');
         $this->addFlash('info', 'déconnection terminé!');
         return $this->redirectToRoute('homepage.index');

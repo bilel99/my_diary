@@ -11,6 +11,7 @@ $(document).ready(function(){
     let ajax = new Ajax();
     ajax.returnsCityFromCp();
     ajax.delete_users();
+    ajax.changeStatusActu();
 });
 
 /*********************************************************

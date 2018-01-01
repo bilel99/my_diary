@@ -57,9 +57,9 @@ class Actu
     private $contenu;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(name="status", type="array")
+     * @ORM\Column(name="status", type="string", columnDefinition="ENUM('actif', 'innactif')")
      */
     private $status;
 

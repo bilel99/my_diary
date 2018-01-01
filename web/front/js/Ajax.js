@@ -121,4 +121,49 @@ class Ajax {
         });
     }
 
+    /**
+     * listen in checkbox in change status actualite
+     */
+    changeStatusActu(){
+        $('.changeActuStatus').change(function () {
+            console.log($('.changeActuStatus'));
+            // On récupére l'url à travers un champ hidden du formulaire
+            let urlActuAjax = $('.url_actu_show').val();
+            console.log(urlActuAjax);
+
+            $.ajax({
+                type: 'POST',
+                url: urlActuAjax,
+                success: function (data) {
+                    // Affichage du message
+                    $('.message').append(
+                        iziToast.success({
+                            position: 'bottomRight', // center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                            progressBarColor: '',
+                            backgroundColor: '',
+                            messageSize: '',
+                            messageColor: '',
+                            icon: '',
+                            image: '',
+                            imageWidth: 50,
+                            balloon: true,
+                            drag: true,
+                            progressBar: true,
+                            timeout: 5000,
+                            title: 'Bravo',
+                            message: data.message,
+                        })
+                    );
+                }, error(){
+                    swal(
+                        'Whoooops...',
+                        'Nous avons rencontré une erreur !',
+                        'error'
+                    );
+                }
+            });
+
+        });
+    }
+
 }
