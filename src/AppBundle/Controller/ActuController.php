@@ -2,6 +2,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Actu;
+use AppBundle\Entity\Media;
 use AppBundle\Form\ActuType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,13 +20,6 @@ class ActuController extends Controller {
      * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
      */
     public function indexAction(Request $request){
-        $auth_checker = $this->get('security.authorization_checker');
-        $token = $this->get('security.token_storage')->getToken();
-        $isRoleAdmin = $auth_checker->isGranted('ROLE_USER');
-        dump($auth_checker);
-        dump($token);
-        dump($isRoleAdmin);
-
         $actu = new Actu();
         $form = $this->createForm(ActuType::class, $actu);
         $form->handleRequest($request);
@@ -39,6 +33,7 @@ class ActuController extends Controller {
                 $actu->setCreatedAt(new \DateTime());
                 $entityActu->persist($actu);
                 $entityActu->flush();
+
                 $this->addFlash('success', 'Enregistrement effectué avec succès !');
                 $this->redirectToRoute('actu');
             }
@@ -60,6 +55,7 @@ class ActuController extends Controller {
      * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
      */
     public function showAction(Request $request, Actu $actu){
+
 
         return $this->render('actu/show.html.twig', array(
             'actu' => $actu

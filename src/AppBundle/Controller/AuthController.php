@@ -99,7 +99,6 @@ class AuthController extends Controller
             $result = $entityUsers->find($users->getId());
             $this->get('session')->set('users', $result);
 
-            // TODO créer un notify subscriber pour envoie email après inscription
             // Envoie email
             $name = 'bilel.bekkouche@gmail.com';
             $email = $form['email']->getData();
@@ -117,7 +116,6 @@ class AuthController extends Controller
                     'text/html'
                 );
             $mailer->send($message);
-            // TODO FIN
 
             $this->addFlash('success', 'Compte créer avec succès!');
             return $this->redirectToRoute('homepage.index');

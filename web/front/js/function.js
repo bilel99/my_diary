@@ -24,6 +24,15 @@ $(document).ready(function() {
     $('.js-datepicker').datepicker({
         format: 'yyyy-mm-dd'
     });
+
+    // Pré-remplir un champ texte à partir d'un autre champ
+    // Detect changement type file
+    $('.file').change(function () {
+        // Recuperer uniquement le nom de l'image sans le chemin
+        var file = $('.file').val().split('\\').pop();
+        // Ajouter le nom de l'image à l'autre champ
+        $('.namefile').val(file);
+    });
 });
 
 
@@ -75,3 +84,10 @@ $('a.sf-back-to-top').click(function() {
     }, 700);
     return false;
 });
+
+
+
+
+
+
+

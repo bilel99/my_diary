@@ -20,7 +20,8 @@
                             {{ form_row(form.status) }}
                             {{ form_row(form.date_debut) }}
                             {{ form_row(form.date_fin) }}
-
+                            {{ form_row(form['media'].nom) }}
+                            {{ form_row(form['media'].file) }}
 
                             <button class="btn btn-primary col-md-4 col-md-offset-4">{{ 'actu_btn_actu'|trans }}</button>
                         {{ form_end(form) }}
@@ -35,37 +36,39 @@
                     <div class="panel-heading">
                         <h3 class="panel-title text-center">{{ 'actu_panel'|trans }}</h3>
                     </div>
-                    <div class="panel-body ">
-                        <table class="table">
-                            <thead class='table-head'>
-                            <tr class='table-head'>
-                                <th>{{ 'actu_field_title'|trans }}</th>
-                                <th>{{ 'actu_field_status'|trans }}</th>
-                                <th>{{ 'actu_field_createdAt'|trans }}</th>
-                                <th>{{ 'actu_field_action'|trans }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for row in actu %}
-                                <tr>
-                                    <td>{{ row.titre }}</td>
-                                    <td>{{ row.status }}</td>
-                                    <td>{{ row.createdAt|date('d/m/Y') }}</td>
-                                    <td>
-                                        <a href="{{ path('actu.show', {'id': row.id }) }}"><i class="fa fa-newspaper-o"></i></a>
-                                        <a href=""><i class="fa fa-pencil-square-o"></i></a>
-                                        <a href=""><i class="fa fa-trash-o"></i></a>
-                                    </td>
+                    {% if actu|length > 0 %}
+                        <div class="panel-body ">
+                            <table class="table">
+                                <thead class='table-head'>
+                                <tr class='table-head'>
+                                    <th>{{ 'actu_field_title'|trans }}</th>
+                                    <th>{{ 'actu_field_status'|trans }}</th>
+                                    <th>{{ 'actu_field_createdAt'|trans }}</th>
+                                    <th>{{ 'actu_field_action'|trans }}</th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                {% for row in actu %}
+                                    <tr>
+                                        <td>{{ row.titre }}</td>
+                                        <td>{{ row.status }}</td>
+                                        <td>{{ row.createdAt|date('d/m/Y') }}</td>
+                                        <td>
+                                            <a href="{{ path('actu.show', {'id': row.id }) }}"><i class="fa fa-newspaper-o"></i></a>
+                                            <a href=""><i class="fa fa-pencil-square-o"></i></a>
+                                            <a href=""><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-center">{{ 'actu_empty_length'|trans }}</p>
+                    {% endif %}
                 </div>
 
             </div>
-
-
         </div>
     </div>
 

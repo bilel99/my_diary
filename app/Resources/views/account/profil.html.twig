@@ -25,7 +25,8 @@
                                     <input type="text" name="ville" required="required" class="ville form-control" value="{{ users.getVille().getLibelle() }}">
                                 {% endif %}
                             </div>
-                            {{ form_row(form.file) }}
+                            {{ form_row(form['media'].nom) }}
+                            {{ form_row(form['media'].file) }}
                             <button class="btn btn-primary col-md-4 col-md-offset-4">{{ 'profil_btn_profil'|trans }}</button>
                         {{ form_end(form) }}
 
@@ -41,7 +42,7 @@
 
             <div class="col-md-4 col-md-offset-1 user-details">
                 <div class="user-image">
-                    <img src="{{ app.request.basepath }}/uploads/{{ users.filename }}" alt="your profil image" title="your profil image" class="img-circle" width="220">
+                    <img src="{{ asset(users.media.AssetFilename) }}" alt="{{ users.media.nom }}" class="img-circle" >
                 </div>
                 <div class="user-info-block">
                     <div class="user-heading">

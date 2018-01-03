@@ -24,9 +24,15 @@ class Media
 
     /**
      * @var array
-     * @ORM\ManyToMany(targetEntity="Actu", mappedBy="media")
+     * @ORM\OneToOne(targetEntity="Actu", mappedBy="media")
      */
     private $actu;
+
+    /**
+     * @var array
+     * @ORM\OneToOne(targetEntity="Users", mappedBy="media")
+     */
+    private $users;
 
     /**
      * @var array
@@ -37,17 +43,18 @@ class Media
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=45)
+     * @ORM\Column(name="nom", type="string", length=45, nullable=true)
      */
     private $nom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="filename", type="string", length=255)
+     * @ORM\Column(name="filename", type="string", length=255, nullable=true)
      */
     private $filename;
 
+    // Work private variable
     private $file;
 
     /**
@@ -164,7 +171,6 @@ class Media
         $this->filename = $filename;
     }
 
-
     /*****************************************************
      *
      *                  Step Upload Image
@@ -185,7 +191,7 @@ class Media
         return $this->filename === null ? null : $this->getUploadRootDir().'/'.$this->filename;
     }
 
-    public function getAssetPath(){
+    public function getAssetFilename(){
         return 'uploads/'.$this->filename;
     }
 
@@ -233,47 +239,13 @@ class Media
             unlink($this->tempFile);
         }
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->actu = new \Doctrine\Common\Collections\ArrayCollection();
         $this->diary = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add actu
-     *
-     * @param \AppBundle\Entity\Actu $actu
-     *
-     * @return Media
-     */
-    public function addActu(\AppBundle\Entity\Actu $actu)
-    {
-        $this->actu[] = $actu;
-
-        return $this;
-    }
-
-    /**
-     * Remove actu
-     *
-     * @param \AppBundle\Entity\Actu $actu
-     */
-    public function removeActu(\AppBundle\Entity\Actu $actu)
-    {
-        $this->actu->removeElement($actu);
-    }
-
-    /**
-     * Get actu
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getActu()
-    {
-        return $this->actu;
     }
 
     /**
@@ -308,5 +280,53 @@ class Media
     public function getDiary()
     {
         return $this->diary;
+    }
+
+    /**
+     * @return array
+     */
+    public function getActu()
+    {
+        return $this->actu;
+    }
+
+    /**
+     * @param array $actu
+     */
+    public function setActu($actu)
+    {
+        $this->actu = $actu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param array $users
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
     }
 }

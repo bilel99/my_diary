@@ -37,7 +37,7 @@ actu_panel_date: Dates
 actu_panel_image: Image
 actu_panel_action: Action
 actu_action_field_status: Status
-
+actu_empty_length: Aucune actualité pour le moment !
 
 ######## HomePage Section 1 #########
 section1_title1: Ajouter un post

@@ -34,11 +34,7 @@ class ProfilType extends AbstractType {
                 'required' => false,
                 'attr' => array('class' => 'cp', 'maxlength' => 5)
             ))
-            ->add('file', FileType::class, array(
-                'label' => 'Quel image vous représente ?',
-                'required' => false,
-                'data_class' => null
-            ));
+            ->add('media', MediaType::class);
     }
 
     /**

@@ -41,6 +41,19 @@
             <div class="col-md-6">
                 <div class="panel panel-default ticket-list">
                     <div class="panel-heading">
+                        <h3 class="panel-title text-center">{{ 'actu_panel_image'|trans }}</h3>
+                    </div>
+                    <div class="panel-body ">
+                        <div class="col-md-12 show-actu">
+                            <img src="{{ asset(actu.media.AssetFilename) }}" alt="{{ actu.media.nom }}" class="img-responsive" width="160" style="margin-left: 30%;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default ticket-list">
+                    <div class="panel-heading">
                         <h3 class="panel-title text-center">{{ 'actu_panel_date'|trans }}</h3>
                     </div>
                     <div class="panel-body ">

@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsersRepository")
- * @ORM\HasLifecycleCallbacks
  */
 class Users
 {
@@ -37,6 +36,13 @@ class Users
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id")
      */
     private $role;
+
+    /**
+     * @var Media
+     * @ORM\OneToOne(targetEntity="Media", inversedBy="users", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+     */
+    private $media;
 
     /**
      * @var array
@@ -79,15 +85,6 @@ class Users
      * @ORM\Column(name="date_naissance", type="date", nullable=true)
      */
     private $dateNaissance;
-
-    /**
-     * @var filename
-     *
-     * @ORM\Column(name="filename", type="string", length=255, nullable=true)
-     */
-    private $filename;
-
-    public $file;
 
     /**
      * @var string
@@ -273,75 +270,6 @@ class Users
         $this->updatedAt = $updatedAt;
     }
 
-    /*****************************************************
-     *
-     *                  Step Upload Image
-     *
-     ****************************************************/
-    /**
-     * @ORM\PostLoad()
-     */
-    public function postLoad(){
-        $this->updatedAt = new \DateTime();
-    }
-
-    public function getUploadRootDir(){
-        return __DIR__.'/../../../web/uploads';
-    }
-
-    public function getAbsolutePath(){
-        return $this->filename === null ? null : $this->getUploadRootDir().'/'.$this->filename;
-    }
-
-    public function getAssetPath(){
-        return 'uploads/'.$this->filename;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload(){
-        $this->tempFile = $this->getAbsolutePath();
-        $this->oldFile = $this->getFilename();
-        $this->updatedAt = new \DateTime();
-
-        if($this->file != null) {
-            $this->filename = md5(uniqid()).'.'.$this->file->guessExtension();
-        }
-    }
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload(){
-        if($this->file !== null) {
-            $this->file->move($this->getUploadRootDir(), $this->filename);
-            unset($this->file);
-
-            if($this->oldFile != null) {
-                unlink($this->tempFile);
-            }
-        }
-    }
-
-    /**
-     * @ORM\PreRemove()
-     */
-    public function preRemoveUpload(){
-        $this->tempFile = $this->getAbsolutePath();
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeUpload(){
-        if(file_exists($this->tempFile)){
-            unlink($this->tempFile);
-        }
-    }
-
     /**
      * Constructor
      */
@@ -468,22 +396,6 @@ class Users
     }
 
     /**
-     * @return filename
-     */
-    public function getFilename()
-    {
-        return $this->filename;
-    }
-
-    /**
-     * @param filename $filename
-     */
-    public function setFilename($filename)
-    {
-        $this->filename = $filename;
-    }
-
-    /**
      * @return mixed
      */
     public function getOldPassword()
@@ -518,5 +430,21 @@ class Users
     public function __toString()
     {
         return $this->pseudo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param mixed $media
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
     }
 }

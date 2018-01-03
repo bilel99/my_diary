@@ -5,8 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -58,7 +58,16 @@ class ActuType extends AbstractType
                 // add a class that can be selected in JavaScript
                 'attr' => ['class' => 'js-datepicker'],
                 'placeholder' => 'Select a value'
-            ]);
+            ])
+            ->add('media', MediaType::class);
+
+
+        // Si on a une ArrayCollection alors utilser sa et créer formulaire via js
+        /*->add('media', CollectionType::class, array(
+        'entry_type' => MediaType::class,
+        'entry_options' => array('label' => true),
+        'allow_add' => true))*/
+
     }
 
     /**
