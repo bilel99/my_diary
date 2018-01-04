@@ -209,3 +209,62 @@ i {
 .action-actu-widget-on-off{
     float: right;
 }
+.deleteActu {
+    display: inline-block;
+}
+
+
+/* float button return top page */
+.sf-back-to-top {
+    background-color: #9b59b6; /* button color */
+    color: white; /* text/arrow color */
+    display: none;
+    z-index: 999;
+    /* float in bottom right corner */
+    /* 20 pixels from edge */
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    /* size of button is 50 pixels*/
+    width: 80px;
+    height: 80px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    /* round button */
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+a.sf-back-to-top {
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 18px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.9;
+    padding-left: 2px;
+    padding-top: 4px;
+}
+
+a.sf-back-to-top .arrow:before {
+    content: "\f0a9";
+    font-family: 'FontAwesome';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    content: "\f0a9";
+    text-align: center;
+    display: block;
+    vertical-align: middle;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    cursor: pointer;
+    margin-left: -4px;
+}
+/* FINISH float button return top page */

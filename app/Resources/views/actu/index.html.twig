@@ -19,7 +19,12 @@
                             {{ form_row(form.contenu) }}
                             {{ form_row(form.status) }}
                             {{ form_row(form.date_debut) }}
-                            {{ form_row(form.date_fin) }}
+
+                            <span>date de fin</span>&nbsp;<input type="checkbox" name="actif_date_fin" class="actif_date_fin" checked>
+                            <div class="bloc_date_fin">
+                                {{ form_row(form.date_fin) }}
+                            </div>
+
                             {{ form_row(form['media'].nom) }}
                             {{ form_row(form['media'].file) }}
 
@@ -55,8 +60,16 @@
                                         <td>{{ row.createdAt|date('d/m/Y') }}</td>
                                         <td>
                                             <a href="{{ path('actu.show', {'id': row.id }) }}"><i class="fa fa-newspaper-o"></i></a>
-                                            <a href=""><i class="fa fa-pencil-square-o"></i></a>
-                                            <a href=""><i class="fa fa-trash-o"></i></a>
+                                            <a href="{{ path('actu.edit', {'id': row.id }) }}"><i class="fa fa-pencil-square-o"></i></a>
+
+                                            <div id="deleteActu_{{ row.id }}" class="deleteActu" data-id="{{ row.id }}">
+                                                <form action="{{ url('actu.destroy', {'id':row.id}) }}" method="POST" accept-charset="UTF-8" id="form_actu_destroy">
+                                                    <a href="#" class="btn-remove-actu">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                </form>
+                                            </div>
+
                                         </td>
                                     </tr>
                                 {% endfor %}

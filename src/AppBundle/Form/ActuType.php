@@ -36,7 +36,7 @@ class ActuType extends AbstractType
             ->add('contenu', TextareaType::class)
             ->add('status', ChoiceType::class, array(
                 'label' => 'Status',
-                'choices' => array('Actif' => 'Actif', 'Innactif' => 'Innactif'),
+                'choices' => array('actif' => 'actif', 'innactif' => 'innactif'),
                 'expanded' => true,
                 'multiple' => false,
                 'required' => true
@@ -47,7 +47,7 @@ class ActuType extends AbstractType
                 'format' => 'yyyy-MM-dd',
                 'html5' => false,
                 // add a class that can be selected in JavaScript
-                'attr' => ['class' => 'js-datepicker'],
+                'attr' => ['class' => 'js-datepicker date_debut'],
                 'placeholder' => 'Select a value'
             ])
             ->add('date_fin', DateType::class, [
@@ -56,7 +56,7 @@ class ActuType extends AbstractType
                 'format' => 'yyyy-MM-dd',
                 'html5' => false,
                 // add a class that can be selected in JavaScript
-                'attr' => ['class' => 'js-datepicker'],
+                'attr' => ['class' => 'js-datepicker date_fin'],
                 'placeholder' => 'Select a value'
             ])
             ->add('media', MediaType::class);
