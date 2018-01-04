@@ -5,32 +5,55 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-1">
                 <p>
-                    Vous voila sur votre profil, vous pouvez modifier vos information à votre guise !
+                    {{ 'profil_title'|trans }}
                 </p>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><strong>Votre Profil</strong></h3>
+                        <h3 class="panel-title"><strong>{{ 'profil_panel'|trans }}</strong></h3>
                     </div>
                     <div class="panel-body">
                         {{ form_start(form) }}
-                            {{ form_widget(form) }}
-                            <button class="btn btn-primary col-md-4 col-md-offset-4">Valider</button>
+                            {{ form_row(form.pseudo) }}
+                            {{ form_row(form.email) }}
+                            {{ form_row(form.date_naissance) }}
+                            {{ form_row(form.cp) }}
+                            <div class="form-group">
+                                <label class="control-label required" for="appbundle_users_ville">Ville</label>
+                                {% if users.getVille() == null %}
+                                    <input type="text" name="ville" required="required" class="ville form-control" value="">
+                                {% else %}
+                                    <input type="text" name="ville" required="required" class="ville form-control" value="{{ users.getVille().getLibelle() }}">
+                                {% endif %}
+                            </div>
+                            {{ form_row(form['media'].nom) }}
+                            {{ form_row(form['media'].file) }}
+                            <button class="btn btn-primary col-md-4 col-md-offset-4">{{ 'profil_btn_profil'|trans }}</button>
                         {{ form_end(form) }}
+
+                        <!-- url ville -->
+                        <div class="form-group">
+                            <input type="hidden" class="url_ville form-control" value="{{ absolute_url(path('villes', { 'cp': '00000' })) }}">
+                        </div>
+
                         <div class="space"></div>
                     </div>
                 </div>
             </div>
 
-
-
             <div class="col-md-4 col-md-offset-1 user-details">
                 <div class="user-image">
-                    <img src="{{ app.request.basepath }}/uploads/{{ users.filename }}" alt="your profil image" title="your profil image" class="img-circle" width="220">
+                    <img src="{{ asset(users.media.AssetFilename) }}" alt="{{ users.media.nom }}" class="img-circle" >
                 </div>
                 <div class="user-info-block">
                     <div class="user-heading">
                         <h3>{{ users.pseudo }}</h3>
-                        <span class="help-block">Ville ici, Pays ici</span>
+                        <span class="help-block">
+                            {% if users.getVille() == null %}
+                                (ville), (pays)
+                            {% else %}
+                                {{ users.getVille().getLibelle() }}, {{ libellePays }}
+                            {% endif %}
+                        </span>
                     </div>
                     <ul class="navigation">
                         <li class="active">
@@ -39,13 +62,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('changePassword', {'id':app.session.get('users').id}) }}">
+                            <a href="{{ path('changePassword', {'id':users.id}) }}">
                                 <span class="fa fa-key fa-2x"></span>
                             </a>
                         </li>
                         <li>
                             <div id="deleteUser_{{ users.id }}" class="deleteUser" data-id="{{ users.id }}">
-                                <form action="{{ url('deleteUser', {'id':app.session.get('users').id}) }}" method="POST" accept-charset="UTF-8" id="form_user_destroy">
+                                <form action="{{ url('deleteUser', {'id':users.id}) }}" method="POST" accept-charset="UTF-8" id="form_user_destroy">
                                     <a href="#" class="btn-remove-user">
                                         <span class="fa fa-trash fa-2x"></span>
                                     </a>
@@ -58,10 +81,10 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <ul>
-                                        <li>pseudo:</li>
-                                        <li>email:</li>
-                                        <li>date_naissance:</li>
-                                        <li>Créer le:</li>
+                                        <li>{{ 'profil_pseudo'|trans }}</li>
+                                        <li>{{ 'profil_email'|trans }}</li>
+                                        <li>{{ 'profil_years_date'|trans }}</li>
+                                        <li>{{ 'profil_createdAt'|trans }}</li>
                                     </ul>
                                 </div>
                                 <div class="col-md-6">

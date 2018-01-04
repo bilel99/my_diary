@@ -1,9 +1,12 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Pays;
 use AppBundle\Entity\Users;
+use AppBundle\Entity\Ville;
 use AppBundle\Form\ChangePasswordType;
 use AppBundle\Form\ProfilType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,14 +29,34 @@ class AccountController extends Controller {
     /**
      * @Route("/profil/{id}", name="profil")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
      */
     public function profilAction(Request $request, Users $users){
+        // Récupération de la tables ville
+        $repositoryUsers = $this->getDoctrine()->getRepository(Users::class);
+        $users = $repositoryUsers->findAllWithAssociateTable();
+        $users = $users[0];
+
+        $libellePays = '';
+        if($users->getVille() != null){
+            // Récupération de la table pays
+            $repositoryPays = $this->getDoctrine()->getRepository(Pays::class);
+            $pays = $repositoryPays->findOneBy(array('id' => $users->getVille()->getPays()->getId()));
+            $libellePays = $pays->getNomFrFr();
+        }
+
         // Form
         $form = $this->createForm(ProfilType::class, $users);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $libelleVille = $_POST['ville'];
+            $repositoryVille = $this->getDoctrine()->getRepository(Ville::class);
+            $ville = $repositoryVille->getVille($libelleVille);
+            $ville = $ville[0];
+
             // Mise à jour en BDD
+            $users->setVille($ville);
             $this->getDoctrine()->getManager()->flush();
             // Mise à jour de la session
             $this->get('session')->set('users', $users);
@@ -42,13 +65,40 @@ class AccountController extends Controller {
         }
         return $this->render('account/profil.html.twig', [
             'users' => $users,
+            'libellePays' => $libellePays,
             'form' => $form->createView()
         ]);
     }
 
     /**
+     * @Route("/villes/{cp}", name="villes")
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     */
+    public function villesAction(Request $request, $cp){
+        if($request->isXmlHttpRequest()){
+            $em = $this->getDoctrine()->getRepository(Ville::class);
+            $villeCodePostal = $em->findOneBy(array('zipcode' => $cp));
+
+            if($villeCodePostal) {
+                $ville = $villeCodePostal->getLibelle();
+            } else {
+                $ville = null;
+            }
+            // AJAX
+            $response = new JsonResponse();
+            return $response->setData(array(
+                'ville' => $ville
+            ));
+        } else {
+            throw new \Exception('Error');
+        }
+    }
+
+    /**
      * @Route("/changePassword/{id}", name="changePassword")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
      */
     public function changePasswordAction(Request $request, Users $users) {
         $form = $this->createForm(ChangePasswordType::class, $users);
@@ -80,6 +130,7 @@ class AccountController extends Controller {
     /**
      * @Route("/deleteUser/{id}", name="deleteUser")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
      */
     public function deleteUserAction(Request $request, Users $users) {
         // Delete
@@ -103,6 +154,8 @@ class AccountController extends Controller {
                 'message' => $message,
                 'redirectToRouteLogin' => $redirectToRouteLogin
             ));
+        } else {
+            throw new \Exception('Error');
         }
     }
 

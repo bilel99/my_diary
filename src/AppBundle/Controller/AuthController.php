@@ -37,6 +37,16 @@ class AuthController extends Controller
             $repository = $this->getDoctrine()->getRepository(Users::class);
             $result = $repository->authorizedAccess($email, sha1($password.' '.$this->getParameter('salt')));
             if(count($result) === 1) {
+                // Changement role via Symfony, générer un nouveau token
+                $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken(
+                    $result[0],
+                    null,
+                    'main',
+                    array($result[0]->getRole()->getRole())
+                );
+                $this->container->get('security.token_storage')->setToken($token);
+                // Fin changement role via symfony
+
                 $this->get('session')->set('users', $result[0]);
                 $users = $this->get('session')->get('users');
                 $this->addFlash("info", "bienvenue ".$users->getEmail());
@@ -89,7 +99,6 @@ class AuthController extends Controller
             $result = $entityUsers->find($users->getId());
             $this->get('session')->set('users', $result);
 
-            // TODO créer un notify subscriber pour envoie email après inscription
             // Envoie email
             $name = 'bilel.bekkouche@gmail.com';
             $email = $form['email']->getData();
@@ -107,7 +116,6 @@ class AuthController extends Controller
                     'text/html'
                 );
             $mailer->send($message);
-            // TODO FIN
 
             $this->addFlash('success', 'Compte créer avec succès!');
             return $this->redirectToRoute('homepage.index');
@@ -131,6 +139,7 @@ class AuthController extends Controller
         if($form->isSubmitted() && $form->isValid()){
             // Générer password
             $newPass = $this->rand_passwd();
+            $email = $form['email']->getData();
 
             // Vérification si email existe
             $users = $this->getDoctrine()->getRepository(Users::class);
@@ -139,7 +148,7 @@ class AuthController extends Controller
             if(count($validEmail) === 1) {
                 // Sauvegarde new pass champ forgot table
                 $em = $this->getDoctrine()->getManager();
-                $upd = $em->getRepository(Users::class)->find($validEmail[0]->id);
+                $upd = $em->getRepository(Users::class)->find($validEmail[0]->getId());
 
                 if(!$upd){
                     throw $this->createNotFoundException(
@@ -157,7 +166,10 @@ class AuthController extends Controller
                     ->setBody(
                         $this->renderView(
                             'email/forgot.html.twig',
-                            array('randomPassword' => $newPass)
+                            array(
+                                'randomPassword' => $newPass,
+                                'email' => $email
+                            )
                         ),
                         'text/html'
                     );
@@ -220,6 +232,10 @@ class AuthController extends Controller
     public function logoutAction() {
         // Session remove users unset($_SESSION['users']); => $this->get('session')->remove('users');
         // $session_destroy() => $this->get('session')->clear();
+
+        // Remove Token role via symfony
+        $this->container->get('security.token_storage')->setToken(null);
+
         $this->get('session')->remove('users');
         $this->addFlash('info', 'déconnection terminé!');
         return $this->redirectToRoute('homepage.index');

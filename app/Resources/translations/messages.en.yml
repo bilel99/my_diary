@@ -1,9 +1,44 @@
 ######## Navigation bar #########
+navigation_bilel: Bilel Bekkouche
 navigation_accueil: Accueil
 navigation_addPost: Créer un poste
 navigation_myPost: Mes postes
 navigation_login: Connection
 navigation_register: Inscription
+navigation_profil: Mon profil
+navigation_actu: Actualité
+navigation_logout: Déconnection
+navigation_welcome: Bienvenue
+
+######## Actualite #########
+actu_title: Vous voila sur votre page de gestion des actualité, vous pouvez créer une actualité, voir vos actualité mais aussi éditer ou supprimé une actualité !
+actu_panel: Actualité
+actu_btn_actu: Valider
+actu_table_title: Actualité
+actu_table_edit: Edition
+actu_table_delete: Suppression
+actu_field_title: Titre
+actu_field_status: Status
+actu_field_createdAt: Créer le
+actu_field_action: Action
+actu_show_field1: Langue
+actu_show_field2: User
+actu_show_field3: Titre
+actu_show_field4: Contenu
+actu_show_field5: Status
+actu_show_field6: Date de début
+actu_show_field7: Date de fin
+actu_show_field8: Créer le
+actu_show_field9: Modifié le
+actu_show_field10: Identifiant
+actu_show_field11: id
+actu_panel_detail: Detail
+actu_panel_date: Dates
+actu_panel_image: Image
+actu_panel_action: Action
+actu_action_field_status: Status
+actu_empty_length: Aucune actualité pour le moment !
+retour: Retour
 
 ######## HomePage Section 1 #########
 section1_title1: Ajouter un post
@@ -29,23 +64,45 @@ section4_title3: A vos lunette !
 section4_button_read: Lire
 
 ######## HomePage Footer #########
-footer_create: Created by Bilel Bekkouche - 2017 -
+footer_copyright: Created by Bilel Bekkouche - 2017 -
 
 ######## Login #########
 login_title: Entrer votre email et votre mot de passe pour pouvoir accèder à votre compte!
 login_panel: Connection
 login_puce1: Mot de passe oublié
 login_puce2: Pas encore inscris
+login_btn_login: Connection
 
 ######## Register #########
 register_title: Merci de remplir les champs suivant pour vous inscrire au site!
 register_panel: Inscription
 register_puce1: Connection
+register_btn_register: Inscription
 
 ######## Forgot #########
 forgot_title: Entrer votre email, vous recevrez par mail un mot de passe provisoir.
 forgot_panel: Mot de passe oublié
 forgot_puce1: Connection
 forgot_puce2: Pas encore inscris
+forgot_btn_forgot: Envoyé
 
 ######## Forgot step 2 #########
+forgotStep2_title: Entrer le mot de passe que vous venez de recevoir par mail
+forgotStep2_panel: Mot de passe oublié - Etape 2 -
+forgotStep2_puce1: Connection
+forgotStep2_puce2: Pas encore inscris
+forgotStep2_btn_forgotStep2: Valider
+
+######## Change Password #########
+changePassword_title: Vous souhaiter changer de mot de passe, aucun problème remplissez juste les champs suivants !
+changePassword_panel: Changement de mot de passe
+changePassword_btn_forgot: Je change mon mot de passe !
+
+######## Profil #########
+profil_title: Vous voila sur votre profil, vous pouvez modifier vos information à votre guise !
+profil_panel: Votre Profil
+profil_btn_profil: Valider
+profil_pseudo: Pseudo:
+profil_email: Email:
+profil_years_date: date de naissance:
+profil_createdAt: Créer le:

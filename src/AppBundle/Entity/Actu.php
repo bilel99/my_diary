@@ -30,7 +30,7 @@ class Actu
 
     /**
      * @var Media
-     * @ORM\ManyToMany(targetEntity="Media", inversedBy="actu")
+     * @ORM\OneToOne(targetEntity="Media", inversedBy="actu", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
     private $media;
@@ -57,9 +57,9 @@ class Actu
     private $contenu;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(name="status", type="array")
+     * @ORM\Column(name="status", type="string")
      */
     private $status;
 
@@ -269,13 +269,6 @@ class Actu
     {
         return $this->updatedAt;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Set langue
@@ -302,40 +295,6 @@ class Actu
     }
 
     /**
-     * Add medium
-     *
-     * @param \AppBundle\Entity\Media $medium
-     *
-     * @return Actu
-     */
-    public function addMedia(\AppBundle\Entity\Media $medium)
-    {
-        $this->media[] = $medium;
-
-        return $this;
-    }
-
-    /**
-     * Remove medium
-     *
-     * @param \AppBundle\Entity\Media $medium
-     */
-    public function removeMedia(\AppBundle\Entity\Media $medium)
-    {
-        $this->media->removeElement($medium);
-    }
-
-    /**
-     * Get media
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getMedia()
-    {
-        return $this->media;
-    }
-
-    /**
      * Set users
      *
      * @param \AppBundle\Entity\Users $users
@@ -357,5 +316,21 @@ class Actu
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * @return Media
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param Media $media
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
     }
 }

@@ -12,6 +12,15 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+/** Loading Ville field text **/
+.loading {
+    position: absolute;
+    float: right;
+    margin-top: -50px;
+    margin-left: 275px;
+    font-size: 2.5em;
+}
+
 /* Sign'in and Register and Forgot */
 .space {
     margin-top: 70px;
@@ -167,3 +176,95 @@ i {
 .user-body .tab-content h4 {width: 100%; margin: 10px 0; color: #333;}
 .user-body ul { list-style:none; margin-left:0; padding-left:0; }
 
+
+/* Table Actu */
+.ticket-list {
+    width: 500px;
+}
+.ticket-list .panel-heading {
+    background-color:#F4F8F9;
+    border-bottom: none;
+}
+.ticket-list .panel-body {
+    background-color:#F4F8F9;
+}
+.ticket-list .table-head{
+    border: none;
+}
+.fa-pencil-square-o {
+    color: #629755;
+}
+.fa-trash-o {
+    color: #B0413E;
+}
+.fa-newspaper-o {
+    color: #3276b1;
+}
+.show-actu ul {
+    list-style:none; margin-left:0; padding-left:0;
+}
+.btn-action-actu {
+    float: left;
+}
+.action-actu-widget-on-off{
+    float: right;
+}
+.deleteActu {
+    display: inline-block;
+}
+
+
+/* float button return top page */
+.sf-back-to-top {
+    background-color: #9b59b6; /* button color */
+    color: white; /* text/arrow color */
+    display: none;
+    z-index: 999;
+    /* float in bottom right corner */
+    /* 20 pixels from edge */
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    /* size of button is 50 pixels*/
+    width: 80px;
+    height: 80px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    /* round button */
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+a.sf-back-to-top {
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 18px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.9;
+    padding-left: 2px;
+    padding-top: 4px;
+}
+
+a.sf-back-to-top .arrow:before {
+    content: "\f0a9";
+    font-family: 'FontAwesome';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    content: "\f0a9";
+    text-align: center;
+    display: block;
+    vertical-align: middle;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    cursor: pointer;
+    margin-left: -4px;
+}
+/* FINISH float button return top page */

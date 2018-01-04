@@ -10,4 +10,36 @@ namespace AppBundle\Repository;
  */
 class ActuRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * @param $user
+     * @return array
+     */
+    public function getListInActu($user){
+        return $this->createQueryBuilder("a")
+            ->leftJoin("a.langue", "l")
+            ->leftJoin("a.users", "u")
+            ->addSelect("a", "l", "u")
+            ->andWhere("a.users = :users")
+            ->setParameter("users", $user)
+            ->orderBy("a.createdAt", "DESC")
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $limit
+     * @return array
+     */
+    public function getActuHome($limit){
+        return $this->createQueryBuilder("a")
+            ->leftJoin("a.langue", "l")
+            ->leftJoin("a.users", "u")
+            ->leftJoin("a.media", "m")
+            ->addSelect("a", "l", "u", "m")
+            ->orderBy("RAND()")
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }
