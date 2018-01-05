@@ -1,0 +1,45 @@
+{% extends 'layout/base.html.twig' %}
+{% block body %}
+
+    <!-- include modal -->
+    {% include('modal/addCategorieModal.html.twig') %}
+
+    <div class="container" style="margin-top: 90px">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+                <p>{{ 'diary_title'|trans }}</p>
+                <a href="#" class="btn btn-primary col-md-12" data-toggle="modal" data-target="#addCategorieModal">{{ 'label_create_categorie'|trans }}</a>
+                <div class="space"></div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>{{ 'diary_panel'|trans }}</strong></h3>
+                    </div>
+                    <div class="panel-body">
+                        {{ form_start(form) }}
+                            {{ form_row(form.users) }}
+                            {{ form_row(form.categorie) }}
+                            {{ form_row(form.langue) }}
+                            {{ form_row(form.titre) }}
+                            {{ form_row(form.contenu) }}
+                            {{ form_row(form.date_debut) }}
+
+                            <span>{{ 'label_date_fin'|trans }}</span>&nbsp;<input type="checkbox" name="actif_date_fin" class="actif_date_fin" checked>
+                            <div class="bloc_date_fin">
+                                {{ form_row(form.date_fin) }}
+                            </div>
+
+                            <button class="btn btn-primary col-md-4 col-md-offset-4">{{ 'diary_btn_validate'|trans }}</button>
+                        {{ form_end(form) }}
+
+                        <!-- URL List Categorie Ajax -->
+                        <input type="hidden" class="url_list_categorie" name="url_list_categorie" value="{{ url('ajaxListCategorie') }}">
+
+                        <div class="space"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

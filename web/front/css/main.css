@@ -268,3 +268,26 @@ a.sf-back-to-top .arrow:before {
     margin-left: -4px;
 }
 /* FINISH float button return top page */
+
+
+/* MODAL BOOTSTRAP */
+.modal-header {
+    padding-bottom: 5px;
+}
+
+.modal-footer {
+    padding: 0;
+}
+
+.modal-footer .btn-group button {
+    height:40px;
+    border-top-left-radius : 0;
+    border-top-right-radius : 0;
+    border: none;
+    border-right: 1px solid #ddd;
+}
+
+.modal-footer .btn-group:last-child > button {
+    border-right: 0;
+}
+/* FIN MODAL BOOTSTRAP */

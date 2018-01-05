@@ -40,6 +40,11 @@ actu_action_field_status: Status
 actu_empty_length: Aucune actualité pour le moment !
 retour: Retour
 
+######## DIARY #########
+diary_title: Ajouter un poste
+diary_panel: Création / Edition d'un poste
+diary_btn_validate: Valider
+
 ######## HomePage Section 1 #########
 section1_title1: Ajouter un post
 section1_title2: avec toutes simplicité.
@@ -106,3 +111,7 @@ profil_pseudo: Pseudo:
 profil_email: Email:
 profil_years_date: date de naissance:
 profil_createdAt: Créer le:
+
+######## Message #########
+label_date_fin: date de fin
+label_create_categorie: Création d'une catégorie

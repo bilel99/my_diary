@@ -240,8 +240,85 @@ class Ajax {
         });
     }
 
+    /**
+     * Create Categorie
+     * Field Langue and Name and createdAt
+     */
+    createCategorie(){
+        $('.btn-hover-green').on('click', function (e) {
+            e.preventDefault();
+            let form = $('#form_create_categorie');
+            let url = form.attr('action');
+            let data = form.serialize();
 
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: data,
+                success: function (result) {
+                    // close modal bootstrap
+                    $(".modal .close").click();
 
+                    // Affichage du message
+                    $('.message').append(
+                        iziToast.success({
+                            position: 'bottomRight', // center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                            progressBarColor: '',
+                            backgroundColor: '',
+                            messageSize: '',
+                            messageColor: '',
+                            icon: '',
+                            image: '',
+                            imageWidth: 50,
+                            balloon: true,
+                            drag: true,
+                            progressBar: true,
+                            timeout: 5000,
+                            title: 'Bravo',
+                            message: result.message
+                        })
+                    );
+                }, error: function () {
+                    swal(
+                        'Whoooops...',
+                        'Nous avons rencontré une erreur !',
+                        'error'
+                    );
+                }
+            })
+        });
+    }
+
+    /**
+     * Return append list categorie
+     * return response json AJAX
+     */
+    appendCategorie() {
+        $('.list_categorie').on('focus', function(){
+            let url = $('.url_list_categorie').val();
+            $.ajax({
+                type: 'GET',
+                url: url,
+                beforeSend: function () {
+                    // Loading animate font
+                    console.log('LOADING ...');
+                    $('.list_categorie option').remove();
+                },
+                success: function (result) {
+                    $('.list_categorie').append('<option value="" selected="selected">Séléctionnez une catégorie</option>');
+                    $.each(result.categorie, function (index, value) {
+                        $('.list_categorie').append($('<option>', {value: index, text: value}, '</option>'));
+                    })
+                }, error(){
+                    swal(
+                        'Whoooops...',
+                        'Nous avons rencontré une erreur !',
+                        'error'
+                    );
+                }
+            });
+        });
+    }
 
 
 }
