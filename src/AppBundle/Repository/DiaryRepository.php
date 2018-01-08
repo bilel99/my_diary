@@ -10,4 +10,21 @@ namespace AppBundle\Repository;
  */
 class DiaryRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * @param $user
+     * @return array
+     */
+    public function getListInDiary($user){
+        return $this->createQueryBuilder("d")
+            ->leftJoin("d.langue", "l")
+            ->leftJoin("d.users", "u")
+            ->addSelect("d", "l", "u")
+            ->andWhere("d.users = :users")
+            ->setParameter("users", $user)
+            ->orderBy("d.createdAt", "DESC")
+            ->getQuery()
+            ->getResult();
+    }
+
 }

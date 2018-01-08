@@ -296,19 +296,25 @@ class Ajax {
     appendCategorie() {
         $('.list_categorie').on('focus', function(){
             let url = $('.url_list_categorie').val();
+
             $.ajax({
                 type: 'GET',
                 url: url,
                 beforeSend: function () {
                     // Loading animate font
-                    console.log('LOADING ...');
                     $('.list_categorie option').remove();
                 },
                 success: function (result) {
-                    $('.list_categorie').append('<option value="" selected="selected">Séléctionnez une catégorie</option>');
+                    //$('.list_categorie').append('<option>Séléctionnez une catégorie</option>');
                     $.each(result.categorie, function (index, value) {
-                        $('.list_categorie').append($('<option>', {value: index, text: value}, '</option>'));
-                    })
+                        $('.list_categorie').append('<option value='+index+'>'+value+'</option>');
+
+                        $('.list_categorie').on('change', function(){
+                            $('.list_categorie').appendChild('<option value='+this.value+' selected="selected">'+$(".list_categorie option:selected").text()+'</option>');
+                        });
+                    });
+
+
                 }, error(){
                     swal(
                         'Whoooops...',
@@ -317,6 +323,80 @@ class Ajax {
                     );
                 }
             });
+        });
+    }
+
+    /**
+     * Delete Diary AJAX response request
+     */
+    delete_diary() {
+        $('.btn-remove-diary').on('click', function (e) {
+            e.preventDefault();
+            let id = $(this).parents('.deleteDiary').data('id');
+            let form = $('#form_diary_destroy');
+            let url = form.attr('action');
+            let data = form.serialize();
+
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((res) => {
+                if (res.value) {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: data,
+                        success: function (result) {
+                            // Redirection
+                            setTimeout(() => {
+                                location.href = result.redirectToDiary;
+                            }, 1500);
+                            // Affichage du message
+                            $('.message').append(
+                                iziToast.success({
+                                    position: 'bottomRight', // center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                                    progressBarColor: '',
+                                    backgroundColor: '',
+                                    messageSize: '',
+                                    messageColor: '',
+                                    icon: '',
+                                    image: '',
+                                    imageWidth: 50,
+                                    balloon: true,
+                                    drag: true,
+                                    progressBar: true,
+                                    timeout: 5000,
+                                    title: 'Bravo',
+                                    message: result.message
+                                })
+                            );
+
+                            swal(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        }, error: function () {
+                            swal(
+                                'Whoooops...',
+                                'Nous avons rencontré une erreur !',
+                                'error'
+                            );
+                        }
+                    })
+                } else {
+                    swal(
+                        'Ok',
+                        'Faite attention à ce que vous faite !',
+                        'info'
+                    );
+                }
+            })
         });
     }
 

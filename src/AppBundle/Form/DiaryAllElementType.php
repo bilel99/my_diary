@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DiaryType extends AbstractType
+class DiaryAllElementType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -28,6 +28,12 @@ class DiaryType extends AbstractType
             ->add('langue', EntityType::class, [
                 'class'         => 'AppBundle\Entity\Langue',
                 'placeholder'   => 'Séléctionnez une langue',
+                'mapped'        => true,
+                'required'      => true
+            ])
+            ->add('categorie', EntityType::class, [
+                'class'         => 'AppBundle\Entity\Categorie',
+                'placeholder'   => 'Séléctionnez une catégorie',
                 'mapped'        => true,
                 'required'      => true
             ])

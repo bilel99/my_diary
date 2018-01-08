@@ -1,0 +1,105 @@
+{% extends 'layout/base.html.twig' %}
+{% block body %}
+
+    <div class="container" style="margin-top: 90px">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="panel panel-default ticket-list">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">{{ 'diary_panel_detail'|trans }}</h3>
+                    </div>
+                    <div class="panel-body ">
+                        <div class="col-md-6 show-actu">
+                            <ul>
+                                <li>{{ 'diary_show_field10'|trans }}<hr></li>
+                                <li>{{ 'diary_show_field1'|trans }}<hr></li>
+                                <li>{{ 'diary_show_field2'|trans }}<hr></li>
+                                <li>{{ 'diary_show_field3'|trans }}<hr></li>
+                                <li>{{ 'diary_show_field4'|trans }}<hr></li>
+                                <li>{{ 'diary_show_field5'|trans }}<hr></li>
+                                <li>{{ 'diary_show_field8'|trans }}<hr></li>
+                                <li>{{ 'diary_show_field9'|trans }}</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 show-actu">
+                            <ul>
+                                <li>{{ diary.getId() }}<hr></li>
+                                <li>{{ diary.getLangue().getName() }}<hr></li>
+                                <li>{{ diary.getUsers().getPseudo() }}<hr></li>
+                                <li>{{ diary.getTitre() }}<hr></li>
+                                <li>{{ diary.getContenu() }}<hr></li>
+                                <li>{{ diary.categorie.getNom() }}<hr></li>
+                                <li>{{ diary.getCreatedAt()|date('d/m/Y') }}<hr></li>
+                                <li>{{ diary.getUpdatedAt()|date('d/m/Y') }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default ticket-list">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">{{ 'actu_panel_image'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-12 show-actu">
+                            {% for row in diary.media %}
+                                <img src="{{ asset('uploads/') }}{{ row.filename }}" alt="{{ row.nom }}" class="img-responsive" width="160" style="margin-left: 30%;">
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default ticket-list">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">{{ 'diary_panel_date'|trans }}</h3>
+                    </div>
+                    <div class="panel-body ">
+                        <div class="col-md-6 show-actu">
+                            <ul>
+                                <li>{{ 'diary_show_field6'|trans }}<hr></li>
+                                <li>{{ 'diary_show_field7'|trans }}</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 show-actu">
+                            <ul>
+                                <li>{{ diary.getDateDebut()|date('d/m/Y') }}<hr></li>
+                                <li>{{ diary.getDateFin()|date('d/m/Y') }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default ticket-list">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">{{ 'diary_panel_action'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <!-- url actu ajax -->
+                        <input type="hidden" class="url_diary_show" value="{{ absolute_url(path('diary.destroy', { 'id': diary.id })) }}">
+
+                        <div class="btn-action-actu">
+                            <a href="{{ path('diary.edit', {'id': diary.id }) }}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+
+                            <div id="deleteDiary_{{ diary.id }}" class="deleteDiary" data-id="{{ diary.id }}">
+                                <form action="{{ url('diary.destroy', {'id': diary.id}) }}" method="POST" accept-charset="UTF-8" id="form_diary_destroy">
+                                    <a href="#" class="btn-remove-diary">
+                                        <i class="fa fa-trash-o fa-2x"></i>
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

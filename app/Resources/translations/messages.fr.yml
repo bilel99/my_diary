@@ -41,9 +41,33 @@ actu_empty_length: Aucune actualité pour le moment !
 retour: Retour
 
 ######## DIARY #########
-diary_title: Ajouter un poste
-diary_panel: Création / Edition d'un poste
+diary_title: Vous voila sur votre page de gestion des posts !
+diary_panel: Diary
+diary_btn_actu: Valider
+diary_table_title: Diary
+diary_table_edit: Edition
+diary_table_delete: Suppression
+diary_field_title: Titre
+diary_field_createdAt: Créer le
+diary_field_action: Action
+diary_show_field1: Langue
+diary_show_field2: User
+diary_show_field3: Titre
+diary_show_field4: Contenu
+diary_show_field6: Date de début
+diary_show_field7: Date de fin
+diary_show_field8: Créer le
+diary_show_field9: Modifié le
+diary_show_field10: Identifiant
+diary_show_field11: id
+diary_panel_detail: Detail
+diary_panel_date: Dates
+diary_panel_image: Image
+diary_panel_action: Action
+diary_empty_length: Aucun post pour le moment !
 diary_btn_validate: Valider
+diary_field_contenu: Contenu
+diary_show_field5: Catégorie
 
 ######## HomePage Section 1 #########
 section1_title1: Ajouter un post

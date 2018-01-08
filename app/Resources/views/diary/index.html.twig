@@ -17,7 +17,14 @@
                     <div class="panel-body">
                         {{ form_start(form) }}
                             {{ form_row(form.users) }}
-                            {{ form_row(form.categorie) }}
+
+                            <div class="form-group">
+                                <label class="control-label required" for="appbundle_diary_categorie">Categorie</label>
+                                <select id="categorie" name="categorie" required="required" class="list_categorie form-control">
+                                    <option>Séléctionnez une catégorie</option>
+                                </select>
+                            </div>
+
                             {{ form_row(form.langue) }}
                             {{ form_row(form.titre) }}
                             {{ form_row(form.contenu) }}
@@ -28,6 +35,9 @@
                                 {{ form_row(form.date_fin) }}
                             </div>
 
+                            {% form_theme form 'form/jquery.collection.html.twig' %}
+                            {{ form_row(form.media) }}
+
                             <button class="btn btn-primary col-md-4 col-md-offset-4">{{ 'diary_btn_validate'|trans }}</button>
                         {{ form_end(form) }}
 
@@ -37,6 +47,54 @@
                         <div class="space"></div>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-md-4 col-md-offset-1">
+
+                <div class="panel panel-default ticket-list">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">{{ 'diary_panel'|trans }}</h3>
+                    </div>
+                    {% if diary|length > 0 %}
+                        <div class="panel-body ">
+                            <table class="table">
+                                <thead class='table-head'>
+                                <tr class='table-head'>
+                                    <th>{{ 'diary_field_title'|trans }}</th>
+                                    <th>{{ 'diary_field_contenu'|trans }}</th>
+                                    <th>{{ 'diary_field_createdAt'|trans }}</th>
+                                    <th>{{ 'diary_field_action'|trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for row in diary %}
+                                    <tr>
+                                        <td>{{ row.titre }}</td>
+                                        <td>{{ row.contenu }}</td>
+                                        <td>{{ row.createdAt|date('d/m/Y') }}</td>
+                                        <td>
+                                            <a href="{{ path('diary.show', {'id': row.id }) }}"><i class="fa fa-newspaper-o"></i></a>
+                                            <a href="{{ path('diary.edit', {'id': row.id }) }}"><i class="fa fa-pencil-square-o"></i></a>
+
+                                            <div id="deleteDiary_{{ row.id }}" class="deleteDiary" data-id="{{ row.id }}">
+                                                <form action="{{ url('diary.destroy', {'id':row.id}) }}" method="POST" accept-charset="UTF-8" id="form_diary_destroy">
+                                                    <a href="#" class="btn-remove-diary">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                </form>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-center">{{ 'diary_empty_length'|trans }}</p>
+                    {% endif %}
+                </div>
+
             </div>
 
         </div>
