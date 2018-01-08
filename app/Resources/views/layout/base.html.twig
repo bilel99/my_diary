@@ -50,8 +50,6 @@
     {{ include('layout/warning.html.twig') }}
 </div>
 
-{% include('layout/header.html.twig') %}
-
 {% block body %}{% endblock %}
 
 {% include('layout/footer.html.twig') %}
@@ -72,6 +70,12 @@
 <!-- Custom js -->
 <script src="{{ asset('front/js/Ajax.js') }}"></script>
 <script src="{{ asset('front/js/function.js') }}"></script>
+
+<script src="{{ asset('plugin/symfony-collection/jquery.collection.js') }}"></script>
+
+<script type="text/javascript">
+    $('.my-selector').collection();
+</script>
 
 </body>
 </html>

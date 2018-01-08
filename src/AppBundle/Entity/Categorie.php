@@ -171,4 +171,9 @@ class Categorie
     {
         return $this->diary;
     }
+
+    public function __toString()
+    {
+        return $this->nom;
+    }
 }

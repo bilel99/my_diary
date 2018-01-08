@@ -44,10 +44,10 @@ class Diary
 
     /**
      * @var Media
-     * @ORM\ManyToMany(targetEntity="Media", inversedBy="diary")
+     * @ORM\ManyToMany(targetEntity="Media", inversedBy="diary", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id", nullable=true)
      */
-    private $media;
+    public $media;
 
     /**
      * @var string
@@ -245,6 +245,7 @@ class Diary
     {
         return $this->updatedAt;
     }
+
     /**
      * Constructor
      */

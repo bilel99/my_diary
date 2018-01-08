@@ -13,6 +13,9 @@ $(document).ready(function(){
     ajax.delete_users();
     ajax.changeStatusActu();
     ajax.delete_actu();
+    ajax.createCategorie();
+    ajax.appendCategorie();
+    ajax.delete_diary();
 });
 
 /*********************************************************

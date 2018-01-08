@@ -2,23 +2,15 @@ Projet My Diary
 ========================
 
 
+PRISE DE NOTES
+========================
+Created At Bilel
 
-lorem ipsum
-documentation readme
+  * **Revoir les tableaux sur les fichier show afin de le rendre plus ergonomique sur smartphone**
 
-What's inside?
---------------
+  * **Attention mettre une restriction sur page Auth pour éviter d'y accèder quand on est déjà loggué!**
 
-liste à puce readme.md
-
-  * puce 1
-
-  * puce 2
-
-  * puce 3
-
-
-  * **texte en gras** - lorem ipsudem me
+  * **A venir ...**
 
 
 
