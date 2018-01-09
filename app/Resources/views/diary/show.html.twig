@@ -45,9 +45,13 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-md-12 show-actu">
-                            {% for row in diary.media %}
-                                <img src="{{ asset('uploads/') }}{{ row.filename }}" alt="{{ row.nom }}" class="img-responsive" width="160" style="margin-left: 30%;">
-                            {% endfor %}
+                            {% if diary|length > 0 and diary|length > 1 %}
+                                {% for row in diary.media %}
+                                    <img src="{{ asset('uploads/') }}{{ row.filename }}" alt="{{ row.nom }}" class="img-responsive" width="160" style="margin-left: 30%;">
+                                {% endfor %}
+                            {% else %}
+                                <p>{{ 'image_empty'|trans }}</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

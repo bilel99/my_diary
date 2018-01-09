@@ -5,12 +5,14 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Media;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\Users;
+use AppBundle\Form\ChangePasswordType;
 use AppBundle\Form\ForgotStepFinalType;
 use AppBundle\Form\ForgotType;
 use AppBundle\Form\LoginType;
 use AppBundle\Form\ProfilType;
 use AppBundle\Form\RegisterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -85,7 +87,6 @@ class AuthController extends Controller
             $em = $this->getDoctrine()->getManager();
             $users->setCreatedAt(new \DateTime());
             $users->setRole($role);
-            $users->setFilename('default.jpg');
             // Cryptage du password + grain de sel
             $users->setPassword(sha1($form['password']->getData().' '.$this->getParameter('salt')));
 
@@ -196,12 +197,13 @@ class AuthController extends Controller
 
         if($form->isSubmitted() && $form->isValid()){
             // Récupération objet users
+            $formPassword = $form['password']->getData();
             $result = $this->getDoctrine()->getRepository(Users::class);
             $u = $result->findBy(array("forgot" => $form['password']->getData()));
 
             if(count($u) === 1) {
                 $em = $this->getDoctrine()->getManager();
-                $upd = $em->getRepository(Users::class)->find($u[0]->id);
+                $upd = $em->getRepository(Users::class)->find($u[0]->getId());
 
                 if(!$upd){
                     throw $this->createNotFoundException(
@@ -209,11 +211,15 @@ class AuthController extends Controller
                     );
                 }
 
-                $upd->setPassword($form['password']->getData());
-                $em->flush();
+                //$upd->setPassword($form['password']->getData());
+                //$em->flush();
 
-                $this->addFlash("success", "Modification du mot de passe effectue avec success!");
-                return $this->redirectToRoute('login');
+                $this->addFlash("success", "Mot de passe valide");
+                return $this->redirectToRoute('changePassword', array(
+                    'user' => $formPassword
+                ));
+            } else {
+                $this->addFlash('error', 'Mot de passe entrer inconnue !');
             }
         }
 
@@ -221,6 +227,39 @@ class AuthController extends Controller
             'users' => $users,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/changePassword/{user}", name="changePassword")
+     * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @param $user
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function changePasswordAction(Request $request, $user){
+        // Récupération objet users
+        $result = $this->getDoctrine()->getRepository(Users::class);
+        $user = $result->findBy(array("forgot" => $request->attributes->get('user')));
+
+        $form = $this->createForm(ChangePasswordType::class, $user[0]);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            foreach ($user as $u) {
+                $em = $this->getDoctrine()->getManager();
+                $u->setPassword(sha1($form['password']->getData().' '.$this->getParameter('salt')));
+                $em->persist($u);
+                $em->flush();
+            }
+            $this->addFlash("success", "Modification de votre mot de passe efféctué avec succès !");
+            return $this->redirectToRoute("login");
+        }
+
+        return $this->render('Auth/changePass.html.twig', array(
+            'user'    => $user,
+            'form' => $form->createView()
+        ));
     }
 
 

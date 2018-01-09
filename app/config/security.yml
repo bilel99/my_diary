@@ -14,11 +14,12 @@ security:
             security: false
 
         main:
-            anonymous: ~
-            # activate different ways to authenticate
+            anonymous:
 
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
 
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+    access_control:
+        # require has_role Anonymously for Login, Register, ForgotStepOne and ForgotStepTwo
+        #- { path: ^/, allow_if: "not has_role('ROLE_USER', 'ROLE_ADMIN')" }
+        #- { path: ^/register, allow_if: "not has_role('ROLE_USER', 'ROLE_ADMIN')" }
+        #- { path: ^/forgot, allow_if: "not has_role('ROLE_USER', 'ROLE_ADMIN')" }
+        #- { path: ^/forgotStepFinal, allow_if: "not has_role('ROLE_USER', 'ROLE_ADMIN')" }

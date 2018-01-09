@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Actu;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -12,6 +13,7 @@ class HomePageController extends Controller
     /**
      * @Route("home", name="homepage.index")
      * @Method({"GET"})
+     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
      */
     public function indexAction()
     {

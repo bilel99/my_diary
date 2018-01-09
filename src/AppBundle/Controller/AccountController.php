@@ -96,7 +96,7 @@ class AccountController extends Controller {
     }
 
     /**
-     * @Route("/changePassword/{id}", name="changePassword")
+     * @Route("/changePass/{id}", name="changePass")
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
      */

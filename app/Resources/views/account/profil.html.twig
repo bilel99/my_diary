@@ -42,7 +42,7 @@
 
             <div class="col-md-4 col-md-offset-1 user-details">
                 <div class="user-image">
-                    <img src="{{ asset(users.media.AssetFilename) }}" alt="{{ users.media.nom }}" class="img-circle" >
+                    <img src="{{ asset(users.media.AssetFilename) }}" alt="{{ users.media.nom }}" class="img-circle" width="400">
                 </div>
                 <div class="user-info-block">
                     <div class="user-heading">
@@ -62,7 +62,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('changePassword', {'id':users.id}) }}">
+                            <a href="{{ path('changePass', {'id':users.id}) }}">
                                 <span class="fa fa-key fa-2x"></span>
                             </a>
                         </li>

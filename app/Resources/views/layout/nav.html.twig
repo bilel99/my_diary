@@ -10,8 +10,12 @@
             <a class="navbar-brand"><b>{{ 'navigation_bilel'|trans }}</b></a>
 
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="{{ path('homepage.index') }}">{{ 'navigation_accueil'|trans }}</a></li>
-                <li><a href="{{ path('diary') }}">{{ 'navigation_addPost'|trans }}</a></li>
+                {% if app.session.has('users') %}
+                    <li><a href="{{ path('homepage.index') }}">{{ 'navigation_accueil'|trans }}</a></li>
+                    <li><a href="{{ path('diary') }}">{{ 'navigation_addPost'|trans }}</a></li>
+                {% else %}
+                    <li><a href="{{ path('homepage.index') }}">{{ 'navigation_accueil'|trans }}</a></li>
+                {% endif %}
             </ul>
         </div>
         <div class="navbar-collapse collapse">

@@ -68,6 +68,12 @@ diary_empty_length: Aucun post pour le moment !
 diary_btn_validate: Valider
 diary_field_contenu: Contenu
 diary_show_field5: Catégorie
+image_empty: Aucune image pour ce post !
+
+######## Change password ############
+changePassword_title: Faite votre changement de mot de passe
+changePass_panel: Changement de mot de passe
+changePass_btn_register: Valider
 
 ######## HomePage Section 1 #########
 section1_title1: Ajouter un post
