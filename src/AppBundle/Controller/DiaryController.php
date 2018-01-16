@@ -22,7 +22,7 @@ class DiaryController extends Controller {
     /**
      * @Route("/diary", name="diary")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      */
     public function indexAction(Request $request){
         $diary = new Diary();
@@ -108,7 +108,7 @@ class DiaryController extends Controller {
     /**
      * @Route("/ajaxListCategorie", name="ajaxListCategorie")
      * @Method({"GET"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      */
     public function ajaxListCategorieAction(Request $request){
         if($request->isXmlHttpRequest()){
@@ -136,19 +136,24 @@ class DiaryController extends Controller {
     /**
      * @Route("/diary/edit/{id}", name="diary.edit")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      *
      * @param Diary $diary
      * @param Request $request
+     * @return render
      */
     public function updateAction(Diary $diary, Request $request){
         $form = $this->createForm(DiaryAllElementType::class, $diary);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'Modification effectué avec success !');
-            $this->redirectToRoute('diary');
+            if($form['date_fin']->getData() < $form['date_debut']->getData()){
+                $this->addFlash('error', 'Date de fin inférieur à date de début !');
+            } else {
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', 'Modification effectué avec success !');
+                $this->redirectToRoute('diary');
+            }
         }
 
         return $this->render('diary/edit.html.twig', array(
@@ -160,7 +165,7 @@ class DiaryController extends Controller {
     /**
      * @Route("/diary/{id}", name="diary.show")
      * @Method({"GET"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      *
      * @param Diary $diary
      * @return render
@@ -174,7 +179,7 @@ class DiaryController extends Controller {
     /**
      * @Route("/diary/destroy/{id}", name="diary.destroy")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      *
      * @param Request $request
      * @param Diary $diary

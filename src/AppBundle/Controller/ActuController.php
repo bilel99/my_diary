@@ -18,7 +18,7 @@ class ActuController extends Controller {
     /**
      * @Route("/actu", name="actu")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      */
     public function indexAction(Request $request){
         $actu = new Actu();
@@ -53,7 +53,7 @@ class ActuController extends Controller {
     /**
      * @Route("/actu/{id}", name="actu.show")
      * @Method({"GET"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      */
     public function showAction(Request $request, Actu $actu){
         return $this->render('actu/show.html.twig', array(
@@ -64,7 +64,7 @@ class ActuController extends Controller {
     /**
      * @Route("/setStatus/{id}", name="setterStatus")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      */
     public function setterInStatusAction(Request $request, $id){
         if($request->isXmlHttpRequest()){
@@ -93,7 +93,7 @@ class ActuController extends Controller {
     /**
      * @Route("/actu/edit/{id}", name="actu.edit")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      *
      * @param Actu $actu
      * @param Request $request
@@ -104,9 +104,13 @@ class ActuController extends Controller {
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'Modification effectué avec success !');
-            $this->redirectToRoute('actu');
+            if($form['date_fin']->getData() < $form['date_debut']->getData()){
+                $this->addFlash('error', 'Date de fin inférieur à date de début !');
+            } else {
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', 'Modification effectué avec success !');
+                $this->redirectToRoute('actu');
+            }
         }
 
         return $this->render('actu/edit.html.twig', array(
@@ -118,7 +122,7 @@ class ActuController extends Controller {
     /**
      * @Route("/actu/destroy/{id}", name="actu.destroy")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      *
      * @param Request $request
      * @param Actu $actu

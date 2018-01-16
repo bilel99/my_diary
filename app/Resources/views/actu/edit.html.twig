@@ -19,7 +19,12 @@
                             {{ form_row(form.contenu) }}
                             {{ form_row(form.status) }}
                             {{ form_row(form.date_debut) }}
-                            {{ form_row(form.date_fin) }}
+
+                            <span>{{ 'label_date_fin'|trans }}</span>&nbsp;<input type="checkbox" name="actif_date_fin" class="actif_date_fin" checked>
+                            <div class="bloc_date_fin">
+                                {{ form_row(form.date_fin) }}
+                            </div>
+
                             {{ form_row(form['media'].nom) }}
                             {{ form_row(form['media'].file) }}
 

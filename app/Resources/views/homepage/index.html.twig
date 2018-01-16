@@ -5,8 +5,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <h1>Ajouter un post<br/>
-                    avec toutes simplicité.</h1>
+                <h1>{{ 'section1_title1'|trans }}<br/>
+                    {{ 'section1_title2'|trans }}</h1>
             </div><!-- /col-lg-6 -->
             <div class="col-lg-6">
                 <img class="img-responsive" src="{{ asset('front/img/ipad-hand.png') }}" alt="header background">
@@ -18,32 +18,27 @@
 <div class="container">
     <div class="row mt centered">
         <div class="col-lg-6 col-lg-offset-3">
-            <h1>Quelque post<br/>de dernière minute</h1>
-            <h3>Garder les yeux ouvert !</h3>
+            <h1>{{ 'section3_title'|trans }}<br/>{{ 'section3_title2'|trans }}</h1>
+            <h3>{{ 'section3_title3'|trans }}</h3>
         </div>
     </div><!-- /row -->
 
     <div class="row mt centered">
-        <div class="col-lg-4">
-            <img class="img-circle" src="{{ asset('front/img/pic1.jpg') }}" width="140" alt="">
-            <h4>Michael Robson</h4>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.</p>
-            <button class="btn btn-primary btn-xs col-lg-12">Lire<i class="glyphicon glyphicon-globe"></i></button>
-        </div><!--/col-lg-4 -->
-
-        <div class="col-lg-4">
-            <img class="img-circle" src="{{ asset('front/img/pic2.jpg') }}" width="140" alt="">
-            <h4>Pete Ford</h4>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.</p>
-            <button class="btn btn-primary btn-xs col-lg-12">Lire<i class="glyphicon glyphicon-globe"></i></button>
-        </div><!--/col-lg-4 -->
-
-        <div class="col-lg-4">
-            <img class="img-circle" src="{{ asset('front/img/pic3.jpg') }}" width="140" alt="">
-            <h4>Angelica Finning</h4>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.</p>
-            <button class="btn btn-primary btn-xs col-lg-12">Lire<i class="glyphicon glyphicon-globe"></i></button>
-        </div><!--/col-lg-4 -->
+        {% for post in posts %}
+            <div class="col-lg-4">
+                {% if post.media|length > 0 and post.media|length > 1 %}
+                    <img class="img-circle" src="{{ asset('uploads/') }}{{ post.media[0].filename }}" width="140" alt="{{ post.media[0].nom }}">
+                    <h4>{{ post.titre }}</h4>
+                    <p>{{ post.contenu }}</p>
+                    <a href="{{ path('diary.show', {'id': post.id }) }}" class="btn btn-primary btn-xs col-lg-12">{{ 'read'|trans }}<i class="glyphicon glyphicon-globe"></i></a>
+                {% else %}
+                    <p>{{ 'image_empty'|trans }}</p>
+                    <h4>{{ post.titre }}</h4>
+                    <p>{{ post.contenu }}</p>
+                    <a href="{{ path('diary.show', {'id': post.id }) }}" class="btn btn-primary btn-xs col-lg-12">{{ 'read'|trans }}<i class="glyphicon glyphicon-globe"></i></a>
+                {% endif %}
+            </div><!--/col-lg-4 -->
+        {% endfor %}
     </div><!-- /row -->
 </div><!-- /container -->
 
@@ -52,8 +47,8 @@
 <div class="container">
     <div class="row mt centered">
         <div class="col-lg-6 col-lg-offset-3">
-            <h1>Quelque actu<br/>de dernière minute</h1>
-            <h3>A vos lunette !</h3>
+            <h1>{{ 'section4_title'|trans }}<br/>{{ 'section4_title2'|trans }}</h1>
+            <h3>{{ 'section4_title3'|trans }}</h3>
         </div>
     </div><!-- /row -->
 
@@ -64,12 +59,12 @@
                     <img class="img-circle" src="{{ asset(row.media.AssetFilename) }}" alt="{{ row.media.nom }}" width="140">
                     <h4>{{ row.titre }}</h4>
                     <p>{{ row.contenu }}</p>
-                    <a href="{{ path('actu.show', {'id': row.id }) }}" class="btn btn-primary btn-xs col-lg-12">Lire<i class="glyphicon glyphicon-globe"></i></a>
+                    <a href="{{ path('actu.show', {'id': row.id }) }}" class="btn btn-primary btn-xs col-lg-12">{{ 'read'|trans }}<i class="glyphicon glyphicon-globe"></i></a>
                 {% else %}
-                    <p>Aucune image sur cette actualité !</p>
+                    <p>{{ 'image_empty'|trans }}</p>
                     <h4>{{ row.titre }}</h4>
                     <p>{{ row.contenu }}</p>
-                    <a href="{{ path('actu.show', {'id': row.id }) }}" class="btn btn-primary btn-xs col-lg-12">Lire<i class="glyphicon glyphicon-globe"></i></a>
+                    <a href="{{ path('actu.show', {'id': row.id }) }}" class="btn btn-primary btn-xs col-lg-12">{{ 'read'|trans }}<i class="glyphicon glyphicon-globe"></i></a>
                 {% endif %}
             </div><!--/col-lg-4 -->
         {% endfor %}

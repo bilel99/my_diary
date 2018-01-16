@@ -10,8 +10,10 @@
             <a class="navbar-brand"><b>{{ 'navigation_bilel'|trans }}</b></a>
 
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="{{ path('homepage.index') }}">{{ 'navigation_accueil'|trans }}</a></li>
-                <li><a href="{{ path('diary') }}">{{ 'navigation_addPost'|trans }}</a></li>
+                {% if app.session.has('users') %}
+                    <li><a href="{{ path('homepage.index') }}">{{ 'navigation_accueil'|trans }}</a></li>
+                    <li><a href="{{ path('diary') }}">{{ 'navigation_addPost'|trans }}</a></li>
+                {% endif %}
             </ul>
         </div>
         <div class="navbar-collapse collapse">
@@ -23,6 +25,11 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ path('profil', {'id': app.session.get('users').getId()}) }}">{{ 'navigation_profil'|trans }}</a></li>
                             <li><a href="{{ path('actu') }}">{{ 'navigation_actu'|trans }}</a></li>
+
+                            {% if app.session.get('users').getRole().getRole() == 'ROLE_ADMIN' %}
+                                <li><a href="{{ path('admin.dashboard') }}">{{ 'navigation_dashboard'|trans }}</a></li>
+                            {% endif %}
+
                             <li class="divider"></li>
                             <li><a href="{{ path('logout') }}">{{ 'navigation_logout'|trans }}</a></li>
                         </ul>
