@@ -28,6 +28,10 @@ class AuthController extends Controller
      */
     public function loginAction(Request $request) {
 
+        if($this->get('session')->get('users')){
+            return $this->redirectToRoute('homepage.index');
+        }
+
         $users = new Users();
         $form = $this->createForm(LoginType::class, $users);
 
@@ -70,6 +74,10 @@ class AuthController extends Controller
      * @return string
      */
     public function registerAction(Request $request, \Swift_Mailer $mailer) {
+
+        if($this->get('session')->get('users')){
+            return $this->redirectToRoute('homepage.index');
+        }
 
         // Création formulaire
         $users = new Users();
@@ -133,6 +141,11 @@ class AuthController extends Controller
      * @Method({"GET", "POST"})
      */
     public function forgotPassAction(Request $request, \Swift_Mailer $mailer){
+
+        if($this->get('session')->get('users')){
+            return $this->redirectToRoute('homepage.index');
+        }
+
         $users = new Users();
         $form = $this->createForm(ForgotType::class, $users);
         $form->handleRequest($request);
@@ -191,6 +204,11 @@ class AuthController extends Controller
      * @Method({"GET", "POST"})
      */
     public function forgotStepFinalAction(Request $request){
+
+        if($this->get('session')->get('users')){
+            return $this->redirectToRoute('homepage.index');
+        }
+
         $users = new Users();
         $form = $this->createForm(ForgotStepFinalType::class, $users);
         $form->handleRequest($request);
@@ -238,6 +256,11 @@ class AuthController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function changePasswordAction(Request $request, $user){
+
+        if($this->get('session')->get('users')){
+            return $this->redirectToRoute('homepage.index');
+        }
+
         // Récupération objet users
         $result = $this->getDoctrine()->getRepository(Users::class);
         $user = $result->findBy(array("forgot" => $request->attributes->get('user')));
@@ -277,7 +300,7 @@ class AuthController extends Controller
 
         $this->get('session')->remove('users');
         $this->addFlash('info', 'déconnection terminé!');
-        return $this->redirectToRoute('homepage.index');
+        return $this->redirectToRoute('login');
     }
 
     /**

@@ -27,4 +27,19 @@ class DiaryRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    /**
+     * @param $limit
+     * @return array
+     */
+    public function getDiaryHome($limit){
+        return $this->createQueryBuilder("d")
+            ->leftJoin("d.langue", "l")
+            ->leftJoin("d.users", "u")
+            ->addSelect("d", "l", "u")
+            ->orderBy("RAND()")
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

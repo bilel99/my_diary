@@ -9,6 +9,7 @@ navigation_profil: Mon profil
 navigation_actu: Actualité
 navigation_logout: Déconnection
 navigation_welcome: Bienvenue
+navigation_dashboard: Admin
 
 ######## Actualite #########
 actu_title: Vous voila sur votre page de gestion des actualité, vous pouvez créer une actualité, voir vos actualité mais aussi éditer ou supprimé une actualité !
@@ -79,24 +80,16 @@ changePass_btn_register: Valider
 section1_title1: Ajouter un post
 section1_title2: avec toutes simplicité.
 
-######## HomePage Section 2 #########
-section2_title: Comment sa marche ?
-section2_title2: Ses super facile, il suffit de poster, puis le poste est immédiatement visible, et sur tous les navigateurs et plateforme mobile (Android, IOS, mais aussi Windows Phone) et autre distribution linux !
-section2_objet1: 1 - Navigateur Compatible
-section2_objet2: 2 - Notification Email
-section2_objet3: 3 - Facilité de prise de note
-
 ######## HomePage Section 3 #########
 section3_title: Quelque post
 section3_title2: de dernière minute
-section3_title3: Garder les yeux ouvert !
-section3_button_read: Lire
+section3_title3: A vos marque...
+read: Lire
 
 ######## HomePage Section 4 #########
 section4_title: Quelque actu
 section4_title2: de dernière minute
 section4_title3: A vos lunette !
-section4_button_read: Lire
 
 ######## HomePage Footer #########
 footer_copyright: Created by Bilel Bekkouche - 2017 -
@@ -145,3 +138,30 @@ profil_createdAt: Créer le:
 ######## Message #########
 label_date_fin: date de fin
 label_create_categorie: Création d'une catégorie
+
+######## ADMINISTRATION ##########
+administration: Administration
+gestion_users: Gestion Utilisateurs
+filter: Filter
+users: Utilisateurs
+id_sharp: '#'
+ville_id: ville
+role_id: rôle
+users_pseudo: pseudo
+users_email: email
+createdAt: créer le
+langue_id: langue
+nom: nom
+return_website: Allez sur le site
+users_id: utilisateur
+titre: titre
+contenu: contenu
+status: status
+header_dashboard: Dashboard
+header_users: Users
+header_actu: Actu
+header_catégorie: Catégorie
+header_posts: Posts
+categorie_id: catégorie
+gestion_diary: Gestion des posts
+diary: Post

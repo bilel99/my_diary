@@ -29,7 +29,7 @@ class AccountController extends Controller {
     /**
      * @Route("/profil/{id}", name="profil")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      */
     public function profilAction(Request $request, Users $users){
         // Récupération de la tables ville
@@ -73,7 +73,7 @@ class AccountController extends Controller {
     /**
      * @Route("/villes/{cp}", name="villes")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      */
     public function villesAction(Request $request, $cp){
         if($request->isXmlHttpRequest()){
@@ -98,9 +98,9 @@ class AccountController extends Controller {
     /**
      * @Route("/changePass/{id}", name="changePass")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      */
-    public function changePasswordAction(Request $request, Users $users) {
+    public function changePassAction(Request $request, Users $users) {
         $form = $this->createForm(ChangePasswordType::class, $users);
         $form->handleRequest($request);
 
@@ -130,7 +130,7 @@ class AccountController extends Controller {
     /**
      * @Route("/deleteUser/{id}", name="deleteUser")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER', 'ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_ADMIN')")
      */
     public function deleteUserAction(Request $request, Users $users) {
         // Delete

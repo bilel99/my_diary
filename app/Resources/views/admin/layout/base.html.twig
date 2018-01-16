@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
-    <title>{% block title %} Ma journée {% endblock %}</title>
+    <title>{% block title %} Dashboard {% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('front/css/bootstrap.css') }}" rel="stylesheet">
@@ -25,7 +25,7 @@
     <script src="{{ asset('plugin/sweetAlert2/sweetalert2.all.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
     <!-- Custom styles for this template -->
-    <link href="{{ asset('front/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/css/admin_style.css') }}" rel="stylesheet">
     <!-- Fonts from Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
 
@@ -41,7 +41,8 @@
 </head>
 
 <body>
-{% include('layout/nav.html.twig') %}
+{% include('admin/layout/nav.html.twig') %}
+{% include('admin/layout/header.html.twig') %}
 
 <div class="message">
     {{ include('layout/success.html.twig') }}
@@ -52,7 +53,7 @@
 
 {% block body %}{% endblock %}
 
-{% include('layout/footer.html.twig') %}
+{% include('admin/layout/footer.html.twig') %}
 <!-- float button return top page -->
 <a href="#" class="sf-back-to-top"><span class="arrow"></span>Top</a>
 
@@ -68,8 +69,8 @@
 <!-- bootstrap toogle -->
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- Custom js -->
-<script src="{{ asset('front/js/Ajax.js') }}"></script>
 <script src="{{ asset('admin/js/AdminAjax.js') }}"></script>
+<script src="{{ asset('front/js/Ajax.js') }}"></script>
 <script src="{{ asset('front/js/function.js') }}"></script>
 
 <script src="{{ asset('plugin/symfony-collection/jquery.collection.js') }}"></script>
